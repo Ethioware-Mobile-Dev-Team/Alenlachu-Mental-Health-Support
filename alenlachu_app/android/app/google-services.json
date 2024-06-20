@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1011706065434",
+    "project_id": "alenlachu-968e7",
+    "storage_bucket": "alenlachu-968e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011706065434:android:c17a350069db2640b157a3",
+        "android_client_info": {
+          "package_name": "com.example.alenlachu_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1XHR8KKEZ8Eo7IDnOB7oHQ4muWChlVRs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
