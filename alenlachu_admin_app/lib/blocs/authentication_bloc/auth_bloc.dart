@@ -9,5 +9,56 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this._authServices) : super(Uninitialized()) {
     on<AppStarted>(_onAppStarted);
+    on<LoggedIn>(_onLoggedIn);
+    on<LoggedOut>(_onLoggedOut);
+    on<LoginRequested>(_onLoginRequested);
+    on<SignUpRequested>(_onSignUpRequested);
+  }
+
+// mapping events and states
+  void _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
+    final currentUser = await _authServices.getCurrentUser();
+    if (currentUser != null) {
+      emit(Authenticated());
+    } else {
+      emit(Unauthenticated());
+    }
+  }
+
+  void _onLoggedIn(LoggedIn event, Emitter<AuthState> emit) async {
+    final currentUser = await _authServices.getCurrentUser();
+    if (currentUser != null) {
+      emit(Authenticated());
+    } else {
+      emit(Unauthenticated());
+    }
+  }
+
+  void _onLoginRequested(LoginRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      await _authServices.signInWithEmailAndPassword(
+          event.email, event.password);
+      emit(Authenticated());
+    } catch (e) {
+      emit(Unauthenticated());
+    }
+  }
+
+  void _onSignUpRequested(
+      SignUpRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      await _authServices.createUserWithEmailAndPassword(
+          event.name, event.email, event.password);
+      emit(Authenticated());
+    } catch (e) {
+      emit(Unauthenticated());
+    }
+  }
+
+  void _onLoggedOut(LoggedOut event, Emitter<AuthState> emit) async {
+    await _authServices.signOut();
+    emit(Unauthenticated());
   }
 }
