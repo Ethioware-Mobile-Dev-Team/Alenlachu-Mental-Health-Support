@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1011706065434:android:fd6c03cb7794ca44b157a3",
         "android_client_info": {
-          "package_name": "com.example.alenlachu_admin"
+          "package_name": "com.example.alenlachu_admin_app"
         }
       },
       "oauth_client": [],
@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1011706065434:android:c17a350069db2640b157a3",
         "android_client_info": {
-          "package_name": "com.example.alenlachu_app"
+          "package_name": "com.example.alenlachu_admin_app"
         }
       },
       "oauth_client": [],
