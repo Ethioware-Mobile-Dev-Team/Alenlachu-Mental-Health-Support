@@ -34,12 +34,78 @@ class _LandingPageState extends State<LandingPage> {
           BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
         builder: (context, state) {
           return CurvedNavigationBar(
+            height: 65,
+            animationDuration: const Duration(milliseconds: 200),
+            animationCurve: Curves.decelerate,
             index: BottomNavigationState.values.indexOf(state),
-            backgroundColor: Colors.blueAccent,
-            items: const <Widget>[
-              Icon(Icons.home, size: 30),
-              Icon(Icons.add, size: 30),
-              Icon(Icons.person, size: 30),
+            backgroundColor: Colors.white,
+            buttonBackgroundColor: Theme.of(context).primaryColor,
+            color: Theme.of(context).primaryColor,
+            items: <Widget>[
+              Padding(
+                padding: state != BottomNavigationState.home
+                    ? const EdgeInsets.only(top: 20.0)
+                    : const EdgeInsets.all(0),
+                child: Column(
+                  children: [
+                    const Icon(
+                      Icons.home,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                    Visibility(
+                        visible: state != BottomNavigationState.home,
+                        child: const Text(
+                          'Home',
+                          style: TextStyle(color: Colors.white),
+                        ))
+                  ],
+                ),
+              ),
+              Padding(
+                padding: state != BottomNavigationState.post
+                    ? const EdgeInsets.only(top: 20.0)
+                    : const EdgeInsets.all(0),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.add,
+                      size: 30,
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
+                    Visibility(
+                      visible: state != BottomNavigationState.post,
+                      child: Text(
+                        'Post',
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.surface),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: state != BottomNavigationState.profile
+                    ? const EdgeInsets.only(top: 20.0)
+                    : const EdgeInsets.all(0),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.person,
+                      size: 30,
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
+                    Visibility(
+                      visible: state != BottomNavigationState.profile,
+                      child: Text(
+                        'Profile',
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.surface),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ],
             onTap: (index) {
               context

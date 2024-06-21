@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
         theme: appTheme,
         home: const LandingPage(),
         routes: {
-          '/': (context) => const HomeScreen(),
+          '/home': (context) => const HomeScreen(),
           '/post': (context) => const PostScreen(),
           '/profile': (context) => const ProfileScreen(),
         },
