@@ -1,3 +1,8 @@
+import 'package:alenlachu_app/core/admin/app.dart';
+import 'package:alenlachu_app/core/common/login_manager.dart';
+import 'package:alenlachu_app/core/user/app.dart';
+import 'package:alenlachu_app/data/common/models/user_model.dart';
+import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -8,46 +13,16 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    runApp(const MyApp());
+
+    UserModel? user = await LoginManager.getUser();
+    if (user != null) {
+      if (user.role == 'admin') {
+        runApp(const AdminApp());
+      } else {
+        runApp(const UserApp());
+      }
+    }
   } catch (e) {
-    print(e.toString());
-  }
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Home Page'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text('User Home Page'),
-      ),
-    );
+    showToast(e.toString());
   }
 }
