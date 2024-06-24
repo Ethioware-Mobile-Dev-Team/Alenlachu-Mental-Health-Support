@@ -12,24 +12,30 @@ class AuthServices {
     return _auth.currentUser;
   }
 
-  Future<void> createUserWithEmailAndPassword(
+  Future<UserModel?> createUserWithEmailAndPassword(
       String name, String email, String password) async {
     try {
       auth.UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      UserModel newUser =
-          UserModel(id: userCredential.user!.uid, name: name, email: email);
+      UserModel newUser = UserModel(
+          id: userCredential.user!.uid,
+          name: name,
+          email: email,
+          password: password);
       await _db
           .collection('users')
           .doc(userCredential.user!.uid)
           .set(newUser.toJson());
       await LoginManager.saveUser(newUser);
+      return newUser;
     } catch (e) {
       showToast(e.toString());
+      return null;
     }
   }
 
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
+  Future<UserModel?> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
       auth.UserCredential? userCredential = await _auth
           .signInWithEmailAndPassword(email: email, password: password);
@@ -40,10 +46,29 @@ class AuthServices {
       if (doc.exists) {
         UserModel userModel = UserModel.fromSnapshot(doc.data()!);
         await LoginManager.saveUser(userModel);
+        return userModel;
       }
     } catch (e) {
       showToast(e.toString());
+      return null;
     }
+
+    return null;
+  }
+
+  Future<UserModel?> getUserModel(String userId) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc =
+          await _db.collection('users').doc(userId).get();
+      if (doc.exists) {
+        UserModel userModel = UserModel.fromSnapshot(doc.data()!);
+        return userModel;
+      }
+    } catch (e) {
+      showToast(e.toString());
+      return null;
+    }
+    return null;
   }
 
   Future<void> signOut() async {

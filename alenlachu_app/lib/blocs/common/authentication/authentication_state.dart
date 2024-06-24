@@ -1,3 +1,4 @@
+import 'package:alenlachu_app/data/common/models/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AuthenticationState extends Equatable {
@@ -7,7 +8,10 @@ abstract class AuthenticationState extends Equatable {
 
 class Uninitialized extends AuthenticationState {}
 
-class Authenticated extends AuthenticationState {}
+class Authenticated extends AuthenticationState {
+  final UserModel? user;
+  Authenticated({required this.user});
+}
 
 class Unauthenticated extends AuthenticationState {}
 

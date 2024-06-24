@@ -20,10 +20,10 @@ void main() {
       if (user != null) {
         if (user.role == 'admin') {
           // Build our app and trigger a frame.
-          await tester.pumpWidget(const AdminApp());
+          await tester.pumpWidget(AdminApp(admin: user));
         } else {
           // Build our app and trigger a frame.
-          await tester.pumpWidget(const UserApp());
+          await tester.pumpWidget(UserApp(user: user));
         }
       }
     } catch (e) {
