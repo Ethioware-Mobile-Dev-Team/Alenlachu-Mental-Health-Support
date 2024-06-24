@@ -2,6 +2,7 @@ import 'package:alenlachu_app/blocs/common/authentication/authentication_event.d
 import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
 import 'package:alenlachu_app/data/common/models/user_model.dart';
 import 'package:alenlachu_app/data/common/services/authentication/authentication_service.dart';
+import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthenticationBloc
@@ -42,7 +43,13 @@ class AuthenticationBloc
     emit(Authenticating());
     UserModel? user = await _authServices.signInWithEmailAndPassword(
         event.email, event.password);
-    emit(Authenticated(user: user));
+    if (user != null) {
+      showToast("User Authenticated");
+      emit(Authenticated(user: user));
+    } else {
+      showToast("Unauthenticated");
+      emit(Unauthenticated());
+    }
   }
 
   void _onSignUpRequested(
@@ -50,7 +57,11 @@ class AuthenticationBloc
     emit(Authenticating());
     UserModel? user = await _authServices.createUserWithEmailAndPassword(
         event.name, event.email, event.password);
-    emit(Authenticated(user: user));
+    if (user != null) {
+      emit(Authenticated(user: user));
+    } else {
+      emit(Unauthenticated());
+    }
   }
 
   void _onLoggedOut(LoggedOut event, Emitter<AuthenticationState> emit) async {

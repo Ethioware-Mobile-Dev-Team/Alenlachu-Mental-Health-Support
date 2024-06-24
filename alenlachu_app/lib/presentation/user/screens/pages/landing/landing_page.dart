@@ -75,14 +75,14 @@ class _UserLandingPageState extends State<UserLandingPage> {
                 child: Column(
                   children: [
                     Icon(
-                      Icons.add,
+                      Icons.task_alt_rounded,
                       size: 30,
                       color: Theme.of(context).colorScheme.surface,
                     ),
                     Visibility(
                       visible: state != UserBottomNavigationState.todo,
                       child: Text(
-                        'Post',
+                        'Todo',
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.surface),
                       ),
@@ -97,14 +97,14 @@ class _UserLandingPageState extends State<UserLandingPage> {
                 child: Column(
                   children: [
                     Icon(
-                      Icons.add,
+                      Icons.search,
                       size: 30,
                       color: Theme.of(context).colorScheme.surface,
                     ),
                     Visibility(
                       visible: state != UserBottomNavigationState.discover,
                       child: Text(
-                        'Post',
+                        'Discover',
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.surface),
                       ),
@@ -119,14 +119,14 @@ class _UserLandingPageState extends State<UserLandingPage> {
                 child: Column(
                   children: [
                     Icon(
-                      Icons.add,
+                      Icons.chat,
                       size: 30,
                       color: Theme.of(context).colorScheme.surface,
                     ),
                     Visibility(
                       visible: state != UserBottomNavigationState.chat,
                       child: Text(
-                        'Post',
+                        'Chat',
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.surface),
                       ),

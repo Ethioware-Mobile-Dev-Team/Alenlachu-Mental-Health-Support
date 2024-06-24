@@ -21,13 +21,21 @@ void main() async {
     UserModel? user = await LoginManager.getUser();
 
     if (user != null) {
+      showToast(user.role);
       if (user.role == 'admin') {
         runApp(BlocProvider(
           create: (context) => AuthenticationBloc(authServices),
           child: AdminApp(admin: user),
         ));
+      } else {
+        showToast("Here is the problem");
+        runApp(BlocProvider(
+          create: (context) => AuthenticationBloc(authServices),
+          child: UserApp(user: user),
+        ));
       }
     } else {
+      showToast("User is Null");
       runApp(BlocProvider(
         create: (context) => AuthenticationBloc(authServices),
         child: UserApp(user: user),

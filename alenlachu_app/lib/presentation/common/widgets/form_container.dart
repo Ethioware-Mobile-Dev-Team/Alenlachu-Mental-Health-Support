@@ -27,12 +27,6 @@ class FormContainer extends StatefulWidget {
 class _FormContainerState extends State<FormContainer> {
   bool _obscureText = true;
 
-  @override
-  void dispose() {
-    super.dispose();
-    widget.controller.dispose();
-  }
-
   void _updateObscureText() {
     setState(() {
       _obscureText = !_obscureText;
@@ -56,10 +50,10 @@ class _FormContainerState extends State<FormContainer> {
                 ? (_obscureText
                     ? GestureDetector(
                         onTap: _updateObscureText,
-                        child: GestureDetector(
-                            onTap: _updateObscureText,
-                            child: const Icon(Icons.visibility_off)))
-                    : const Icon(Icons.visibility))
+                        child: const Icon(Icons.visibility_off))
+                    : GestureDetector(
+                        onTap: _updateObscureText,
+                        child: const Icon(Icons.visibility)))
                 : null,
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(25))),
