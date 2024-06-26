@@ -1,9 +1,10 @@
 import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.dart';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_event.dart';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
+import 'package:alenlachu_app/presentation/admin/screens/pages/landing/landing_page.dart';
 import 'package:alenlachu_app/presentation/common/screens/authentication/login.dart';
-import 'package:alenlachu_app/presentation/common/screens/authentication/signup.dart';
 import 'package:alenlachu_app/presentation/common/widgets/form_container.dart';
+import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:alenlachu_app/presentation/user/screens/pages/landing/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,12 +33,15 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       body: BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
-          if (state is Unauthenticated) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const LoginPage()));
-          } else if (state is Authenticated) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => const UserLandingPage()));
+          if (state is Authenticated) {
+            showToast(state.user!.role);
+            if (state.user!.role == 'admin') {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const AdminLandingPage()));
+            } else {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const UserLandingPage()));
+            }
           }
         },
         child: Padding(

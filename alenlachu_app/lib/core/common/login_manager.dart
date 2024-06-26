@@ -33,7 +33,6 @@ class LoginManager {
       showToast(e.toString());
       return null;
     }
-    showToast("User Not Found");
     return null;
   }
 
