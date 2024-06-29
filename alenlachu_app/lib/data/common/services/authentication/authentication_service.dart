@@ -79,4 +79,8 @@ class AuthServices {
       showToast(e.toString());
     }
   }
+  Future<String?> getCurrentUserId() async {
+    final user = _auth.currentUser;
+    return user?.uid;
+  }
 }
