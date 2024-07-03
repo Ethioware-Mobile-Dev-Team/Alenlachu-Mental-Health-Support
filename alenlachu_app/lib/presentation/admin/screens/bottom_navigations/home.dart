@@ -1,5 +1,6 @@
 import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.dart';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
+import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +15,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(),
       body: Center(
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
