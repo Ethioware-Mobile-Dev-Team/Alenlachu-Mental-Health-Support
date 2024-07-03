@@ -1,3 +1,4 @@
+import 'package:alenlachu_app/data/common/models/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AuthenticationEvent extends Equatable {
@@ -10,6 +11,12 @@ class AppStarted extends AuthenticationEvent {}
 class LoggedIn extends AuthenticationEvent {}
 
 class LoggedOut extends AuthenticationEvent {}
+
+class UpdateProfile extends AuthenticationEvent {
+  final UserModel? user;
+
+  UpdateProfile({this.user});
+}
 
 class LoginRequested extends AuthenticationEvent {
   final String email;

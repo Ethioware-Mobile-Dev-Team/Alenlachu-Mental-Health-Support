@@ -1,3 +1,4 @@
+import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:alenlachu_app/data/common/models/chat_message.dart';
@@ -63,10 +64,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Assistant", style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
-      ),
+      appBar: const CustomAppBar(title: 'Assistant'),
       body: Stack(
         children: [
           Container(
@@ -77,13 +75,18 @@ class _ChatPageState extends State<ChatPage> {
               itemBuilder: (context, index) {
                 final chatMessage = _chatHistory[index];
                 return Align(
-                  alignment: chatMessage.isSender ? Alignment.topRight : Alignment.topLeft,
+                  alignment: chatMessage.isSender
+                      ? Alignment.topRight
+                      : Alignment.topLeft,
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 8.0),
                     padding: const EdgeInsets.all(12.0),
-                    constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
+                    constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.75),
                     decoration: BoxDecoration(
-                      color: chatMessage.isSender ? Colors.lightBlueAccent : Colors.white,
+                      color: chatMessage.isSender
+                          ? Colors.lightBlueAccent
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(12.0),
                       boxShadow: [
                         BoxShadow(
@@ -96,7 +99,10 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                     child: Text(
                       chatMessage.message,
-                      style: TextStyle(color: chatMessage.isSender ? Colors.white : Colors.black),
+                      style: TextStyle(
+                          color: chatMessage.isSender
+                              ? Colors.white
+                              : Colors.black),
                     ),
                   ),
                 );
@@ -106,7 +112,8 @@ class _ChatPageState extends State<ChatPage> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               color: Colors.white,
               child: Row(
                 children: [

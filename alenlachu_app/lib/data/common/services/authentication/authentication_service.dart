@@ -56,10 +56,19 @@ class AuthServices {
     return null;
   }
 
-  Future<UserModel?> getUserModel(String userId) async {
+  Future<void> updateProfile(UserModel user) async {
     try {
+      await _db.collection('users').doc(user.id).set(user.toJson());
+    } catch (e) {
+      showToast(e.toString());
+    }
+  }
+
+  Future<UserModel?> getUserModel() async {
+    try {
+      final user = await getCurrentUser();
       DocumentSnapshot<Map<String, dynamic>> doc =
-          await _db.collection('users').doc(userId).get();
+          await _db.collection('users').doc(user!.uid).get();
       if (doc.exists) {
         UserModel userModel = UserModel.fromSnapshot(doc.data()!);
         return userModel;
@@ -79,6 +88,7 @@ class AuthServices {
       showToast(e.toString());
     }
   }
+
   Future<String?> getCurrentUserId() async {
     final user = _auth.currentUser;
     return user?.uid;

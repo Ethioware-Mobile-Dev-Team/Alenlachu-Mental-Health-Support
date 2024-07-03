@@ -37,17 +37,22 @@ class ProfileCard extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const SizedBox(
-                  child: Row(
-                    children: [
-                      Icon(Icons.person),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text("Profile"),
-                      const Spacer(),
-                      const Icon(Icons.navigate_next)
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  child: const SizedBox(
+                    child: Row(
+                      children: [
+                        Icon(Icons.person),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text("Profile"),
+                        const Spacer(),
+                        const Icon(Icons.navigate_next)
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
