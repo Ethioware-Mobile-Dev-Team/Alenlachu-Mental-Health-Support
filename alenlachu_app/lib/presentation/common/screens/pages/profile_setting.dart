@@ -8,6 +8,7 @@ import 'package:alenlachu_app/presentation/common/widgets/custome_button.dart';
 import 'package:alenlachu_app/presentation/common/widgets/form_container.dart';
 import 'package:alenlachu_app/presentation/common/widgets/message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileSetting extends StatefulWidget {
@@ -50,71 +51,81 @@ class _ProfileSettingState extends State<ProfileSetting> {
               showSnackbarMessage(context, state.error);
             }
           },
-          child: Column(
-            children: [
-              BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                builder: (context, state) {
-                  if (state is Authenticated) {
-                    return Stack(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: state.user!.photoUrl == null
-                              ? const AssetImage("assets/images/Profile.png")
-                              : NetworkImage(state.user!.photoUrl!),
-                          radius: 50,
-                        ),
-                        GestureDetector(
-                            onTap: () async {
-                              await BlocProvider.of<ProfileCubit>(context)
-                                  .pickImage();
-                            },
-                            child: const Positioned(
-                              top: 10,
-                              left: 10,
-                              child: Icon(Icons.camera_alt),
-                            )),
-                      ],
-                    );
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
-              ),
-              FormContainer(
-                controller: _nameController,
-                labelText: 'name',
-                inputType: TextInputType.text,
-                isPasswordField: false,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              BlocBuilder<ProfileCubit, ProfileState>(
-                builder: (context, state) {
-                  if (state is ImagePicked) {
-                    return CustomButton(
-                        name: 'Save',
-                        width: 100,
-                        onPressed: () async {
-                          await BlocProvider.of<ProfileCubit>(context)
-                              .updateProfile(imageFilePath: state.image);
-                        });
-                  } else if (state is Updating) {
-                    return const CircularProgressIndicator();
-                  } else {
-                    return CustomButton(
-                        name: 'Update',
-                        width: 100,
-                        onPressed: () async {
-                          if (_nameController.text.isNotEmpty) {
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) {
+                    if (state is Authenticated) {
+                      return Stack(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: state.user!.photoUrl == null
+                                ? const AssetImage("assets/images/Profile.png")
+                                : NetworkImage(state.user!.photoUrl!),
+                            radius: 50,
+                          ),
+                          Positioned(
+                            top: 70,
+                            left: 30,
+                            child: GestureDetector(
+                              onTap: () async {
+                                await BlocProvider.of<ProfileCubit>(context)
+                                    .pickImage();
+                              },
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                FormContainer(
+                  controller: _nameController,
+                  labelText: 'name',
+                  inputType: TextInputType.text,
+                  isPasswordField: false,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                BlocBuilder<ProfileCubit, ProfileState>(
+                  builder: (context, state) {
+                    if (state is ImagePicked) {
+                      return CustomButton(
+                          name: 'Save',
+                          width: 100,
+                          onPressed: () async {
                             await BlocProvider.of<ProfileCubit>(context)
-                                .updateName(_nameController.text.trim());
-                          }
-                        });
-                  }
-                },
-              ),
-            ],
+                                .updateProfile(imageFilePath: state.image);
+                          });
+                    } else if (state is Updating) {
+                      return const CircularProgressIndicator();
+                    } else {
+                      return CustomButton(
+                          name: 'Update',
+                          width: 100,
+                          onPressed: () async {
+                            if (_nameController.text.isNotEmpty) {
+                              await BlocProvider.of<ProfileCubit>(context)
+                                  .updateName(_nameController.text.trim());
+                            }
+                          });
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ));
   }
