@@ -34,8 +34,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
           id: todoId,
           title: event.title,
           description: event.description,
-          deadline: event.deadline,
-          createdDate: DateTime.now());
+          deadline: event.deadline.toString(),
+          createdDate: DateTime.now().toString());
       await _service.addTodo(todo);
       emit(TodosLoaded(await _service.fetchTodos()));
     } catch (e) {
@@ -44,7 +44,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   void _onRemoveTodo(RemoveTodo event, Emitter<TodoState> emit) async {
-    emit(TodoLoading());
+    //emit(TodoLoading());
     if (state is TodosLoaded) {
       final List<TodoModel> updatedTodos = (state as TodosLoaded)
           .todos

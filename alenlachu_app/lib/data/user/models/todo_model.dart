@@ -5,8 +5,8 @@ class TodoModel extends Equatable {
   String id;
   String title;
   String description;
-  DateTime deadline;
-  DateTime createdDate;
+  String deadline;
+  String createdDate;
   bool isCompleted;
 
   TodoModel({
@@ -34,8 +34,8 @@ class TodoModel extends Equatable {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      deadline: json['deadline'] as DateTime,
-      createdDate: json['createdDate'] as DateTime,
+      deadline: json['deadline'],
+      createdDate: json['createdDate'],
       isCompleted: json['isCompleted'],
     );
   }

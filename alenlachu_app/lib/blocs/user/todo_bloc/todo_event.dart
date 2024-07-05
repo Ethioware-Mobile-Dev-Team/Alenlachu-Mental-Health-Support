@@ -9,18 +9,16 @@ abstract class TodoEvent extends Equatable {
 class AddTodo extends TodoEvent {
   final String title;
   final String description;
-  final DateTime createdDate;
   final DateTime deadline;
 
   AddTodo({
     required this.title,
     required this.description,
-    required this.createdDate,
     required this.deadline,
   });
 
   @override
-  List<Object> get props => [title, description, createdDate, deadline];
+  List<Object> get props => [title, description, deadline];
 }
 
 class RemoveTodo extends TodoEvent {
