@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/common/models/event/event_model.dart';
 
 class EventService {
-  final String baseUrl = 'http://192.168.99.212:3000/api';
+  final String baseUrl = 'http://192.168.99.212:3000/api/events';
 
   EventService();
 
@@ -28,7 +29,7 @@ class EventService {
     }
   }
 
-  Future<EventModel> createEvent(EventModel event) async {
+  Future<EventModel?> createEvent(EventModel event) async {
     final response = await http.post(
       Uri.parse('$baseUrl/api/events'),
       headers: <String, String>{
@@ -40,7 +41,7 @@ class EventService {
     if (response.statusCode == 201) {
       return EventModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to create event');
+      throw Exception('Failed to create event ${response.statusCode}');
     }
   }
 

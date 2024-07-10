@@ -54,7 +54,7 @@ class _AdminPostPageState extends State<AdminPostPage> {
                 "############################################ ${state.error}");
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("Failed to post event: ${state.error}"),
+                content: Text(state.error),
                 duration: const Duration(seconds: 10),
               ),
             );

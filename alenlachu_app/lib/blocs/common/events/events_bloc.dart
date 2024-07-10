@@ -31,7 +31,7 @@ class EventBloc extends Bloc<EventEvent, EventState> {
     emit(EventLoading());
     try {
       final newEvent = await eventService.createEvent(event.event);
-      emit(EventOperationSuccess(newEvent));
+      emit(EventOperationSuccess(newEvent!));
       add(LoadEvents());
     } catch (e) {
       emit(EventOperationFailure(e.toString()));
