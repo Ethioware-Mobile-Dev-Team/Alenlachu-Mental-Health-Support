@@ -2,10 +2,12 @@ import 'package:alenlachu_app/blocs/admin/bottom_navigation_cubit/admin_bottom_n
 import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.dart';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_event.dart';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
+import 'package:alenlachu_app/blocs/common/events/events_bloc.dart';
 import 'package:alenlachu_app/blocs/common/profile/profile_cubit.dart';
 import 'package:alenlachu_app/blocs/user/bottom_navigation_cubit/user_bottom_navigation_cubit.dart';
 import 'package:alenlachu_app/blocs/user/todo_bloc/todo_bloc.dart';
 import 'package:alenlachu_app/data/common/models/user_model.dart';
+import 'package:alenlachu_app/data/common/services/event_services.dart';
 import 'package:alenlachu_app/data/user/services/todo_services.dart';
 import 'package:alenlachu_app/presentation/admin/screens/pages/landing/landing_page.dart';
 import 'package:alenlachu_app/presentation/common/screens/authentication/login.dart';
@@ -46,7 +48,8 @@ class _MainAppState extends State<MainApp> {
                   context.read<AuthenticationBloc>().authServices,
                   context.read<AuthenticationBloc>())),
           BlocProvider(create: (context) => AdminBottomNavigationCubit()),
-          BlocProvider(create: (context) => TodoBloc(TodoService()))
+          BlocProvider(create: (context) => TodoBloc(TodoService())),
+          BlocProvider(create: (context) => EventBloc(EventService())),
         ],
         child: MaterialApp(
           title: 'Alenlachu Mental Health Support',

@@ -1,8 +1,8 @@
 import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:alenlachu_app/data/common/models/chat_message.dart';
-import 'package:alenlachu_app/data/common/services/chatbot/chat_service.dart';
+import 'package:alenlachu_app/data/user/models/chat_message.dart';
+import 'package:alenlachu_app/data/user/services/chatbot/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
