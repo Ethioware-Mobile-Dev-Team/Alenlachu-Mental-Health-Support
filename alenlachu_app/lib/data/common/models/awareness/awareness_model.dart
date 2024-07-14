@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class AwarenessModel extends Equatable {
-  final String id;
+  final String? id;
   final String title;
   final String description;
   final DateTime createdDate;
   String? image;
 
   AwarenessModel({
-    required this.id,
+    this.id,
     required this.title,
     required this.description,
     required this.createdDate,
@@ -20,7 +20,6 @@ class AwarenessModel extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'title': title,
       'description': description,
       'createdDate':
@@ -31,7 +30,7 @@ class AwarenessModel extends Equatable {
 
   factory AwarenessModel.fromJson(Map<String, dynamic> json) {
     return AwarenessModel(
-      id: json['id'],
+      id: json['_id'],
       title: json['title'],
       description: json['description'],
       createdDate: DateTime.parse(

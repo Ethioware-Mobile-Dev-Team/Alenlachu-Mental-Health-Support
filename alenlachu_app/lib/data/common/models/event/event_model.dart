@@ -2,7 +2,7 @@ import 'package:alenlachu_app/data/common/models/event/orginizer_model.dart';
 import 'package:equatable/equatable.dart';
 
 class EventModel extends Equatable {
-  final String id;
+  final String? id;
   final String title;
   final String description;
   final String date;
@@ -12,7 +12,7 @@ class EventModel extends Equatable {
   String? image;
 
   EventModel({
-    required this.id,
+    this.id,
     required this.title,
     required this.description,
     required this.date,
@@ -24,7 +24,6 @@ class EventModel extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'title': title,
       'description': description,
       'date': date, // Convert DateTime to ISO 8601 string

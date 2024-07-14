@@ -48,9 +48,9 @@ class AwarenessService {
 
   // Update Awareness Entry
   Future<AwarenessModel> updateAwareness(
-      String id, AwarenessModel updatedAwareness) async {
+      AwarenessModel updatedAwareness) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/api/awareness/$id'),
+      Uri.parse('$baseUrl/api/awareness/${updatedAwareness.id}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

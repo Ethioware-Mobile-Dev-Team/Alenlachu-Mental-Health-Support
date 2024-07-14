@@ -29,7 +29,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
             );
           } else if (state is EventOperationFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Failed to perform event operation')),
+              const SnackBar(
+                  content: Text('Failed to perform event operation')),
             );
           }
         },
@@ -47,7 +48,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     subtitle: Text(event.description),
                     trailing: Text(event.date),
                     onTap: () async {
-                      context.read<EventBloc>().add(DeleteEvent(event.id));
+                      context.read<EventBloc>().add(DeleteEvent(event.id!));
                     },
                   );
                 },

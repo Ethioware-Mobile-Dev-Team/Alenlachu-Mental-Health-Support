@@ -22,18 +22,19 @@ class CreateAwareness extends AwarenessEvent {
 }
 
 class UpdateAwareness extends AwarenessEvent {
-  final String id;
   final AwarenessModel awareness;
 
-  const UpdateAwareness(this.id, this.awareness);
+  const UpdateAwareness(this.awareness);
 
   @override
-  List<Object> get props => [id, awareness];
+  List<Object> get props => [awareness];
 }
 
 class UpdateAwarenessImage extends AwarenessEvent {
   final Uint8List imageBytes;
-  const UpdateAwarenessImage({required this.imageBytes});
+  final AwarenessModel awareness;
+  const UpdateAwarenessImage(
+      {required this.imageBytes, required this.awareness});
 }
 
 class DeleteAwareness extends AwarenessEvent {

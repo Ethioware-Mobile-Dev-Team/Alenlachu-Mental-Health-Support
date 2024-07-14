@@ -1,13 +1,13 @@
 import 'package:alenlachu_app/blocs/common/awareness/awareness_event.dart';
 import 'package:alenlachu_app/blocs/common/awareness/awareness_state.dart';
 import 'package:alenlachu_app/data/common/services/awareness_services.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AwarenessBloc extends Bloc<AwarenessEvent, AwarenessState> {
   final AwarenessService awarenessService;
-  final firebase_storage.FirebaseStorage _storage =
-      firebase_storage.FirebaseStorage.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   AwarenessBloc(this.awarenessService) : super(AwarenessInitial()) {
     on<LoadAwareness>(_onLoadAwareness);
@@ -16,21 +16,31 @@ class AwarenessBloc extends Bloc<AwarenessEvent, AwarenessState> {
     on<UpdateAwarenessImage>(_onUpdateAwarenessImage);
     on<DeleteAwareness>(_onDeleteAwareness);
   }
+
   Future<void> _onUpdateAwarenessImage(
       UpdateAwarenessImage event, Emitter<AwarenessState> emit) async {
     emit(AwarenessLoading());
-    try {
-      String imageName = event.awareness.id.toString();
-      firebase_storage.Reference ref =
-          _storage.ref().child('awareness_images/$imageName.jpg');
 
-      firebase_storage.UploadTask uploadTask = ref.putData(event.imageBytes);
+    try {
+      String imageName = event.awareness.id!;
+      if (event.awareness.image != null) {
+        showToast('Deleting old file...');
+        final storageRef =
+            _storage.ref().child('awareness_images/$imageName.jpg');
+        await storageRef.delete();
+      }
+      showToast('uploading image...');
+      final ref = _storage.ref().child('awareness_images/$imageName.jpg');
+
+      UploadTask uploadTask = ref.putData(event.imageBytes);
 
       await uploadTask.whenComplete(() => null);
 
       String imageUrl = await ref.getDownloadURL();
+      showToast('ImageUrl: $imageUrl');
       event.awareness.image = imageUrl;
-      add(UpdateAwareness(event.awareness.id, event.awareness));
+      add(UpdateAwareness(event.awareness));
+      add(LoadAwareness());
     } catch (e) {
       throw Exception('Failed to upload image: $e');
     }
@@ -64,12 +74,14 @@ class AwarenessBloc extends Bloc<AwarenessEvent, AwarenessState> {
       UpdateAwareness event, Emitter<AwarenessState> emit) async {
     emit(AwarenessLoading());
     try {
+      showToast('Updating......');
       final updatedAwareness =
-          await awarenessService.updateAwareness(event.id, event.awareness);
+          await awarenessService.updateAwareness(event.awareness);
       emit(AwarenessOperationSuccess(updatedAwareness));
       add(LoadAwareness());
     } catch (e) {
       emit(AwarenessOperationFailure(e.toString()));
+      add(LoadAwareness());
     }
   }
 

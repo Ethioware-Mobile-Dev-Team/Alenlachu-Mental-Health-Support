@@ -42,10 +42,10 @@ class _EventCardState extends State<EventCard> {
     }
 
     if (_isRSVP) {
-      context.read<EventBloc>().add(UnRSVPEvent(widget.event.id, _userId!));
+      context.read<EventBloc>().add(UnRSVPEvent(widget.event.id!, _userId!));
       showToast("Un-RSVP successful");
     } else {
-      context.read<EventBloc>().add(RSVPEvent(widget.event.id, _userId!));
+      context.read<EventBloc>().add(RSVPEvent(widget.event.id!, _userId!));
       showToast("RSVP successful");
     }
 

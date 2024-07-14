@@ -1,6 +1,11 @@
+import 'dart:typed_data';
+import 'package:alenlachu_app/blocs/common/awareness/awareness_bloc.dart';
+import 'package:alenlachu_app/blocs/common/awareness/awareness_event.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:alenlachu_app/data/common/models/awareness/awareness_model.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AdminAwarenessCard extends StatefulWidget {
   final AwarenessModel awareness;
@@ -12,8 +17,20 @@ class AdminAwarenessCard extends StatefulWidget {
 }
 
 class _AdminAwarenessCardState extends State<AdminAwarenessCard> {
+  final ImagePicker _picker = ImagePicker();
+
   String _formatDate(DateTime date) {
     return DateFormat('MMMM d, yyyy').format(date);
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      Uint8List imageBytes = await pickedFile.readAsBytes();
+      // ignore: use_build_context_synchronously
+      BlocProvider.of<AwarenessBloc>(context).add(UpdateAwarenessImage(
+          awareness: widget.awareness, imageBytes: imageBytes));
+    }
   }
 
   @override
@@ -21,7 +38,7 @@ class _AdminAwarenessCardState extends State<AdminAwarenessCard> {
     return Column(
       children: [
         Container(
-          // height: 200,
+          height: 100,
           width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
               color: Colors.white,
@@ -34,31 +51,40 @@ class _AdminAwarenessCardState extends State<AdminAwarenessCard> {
                   offset: Offset(0, 4),
                 )
               ]),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 80,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        image: widget.awareness.image == null
-                            ? const AssetImage(
-                                'assets/images/awarness_default.png')
-                            : NetworkImage(widget.awareness.image!)
-                                as ImageProvider,
-                        fit: BoxFit.fill)),
+              GestureDetector(
+                onTap: _pickImage,
+                child: Container(
+                  height: 70,
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          image: widget.awareness.image == null
+                              ? const AssetImage(
+                                  'assets/images/awarness_default.png')
+                              : NetworkImage(widget.awareness.image!)
+                                  as ImageProvider,
+                          fit: BoxFit.fill)),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.awareness.title,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                    GestureDetector(
+                      onTap: () {
+                        BlocProvider.of<AwarenessBloc>(context)
+                            .add(DeleteAwareness(widget.awareness.id!));
+                      },
+                      child: Text(
+                        widget.awareness.title,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Text(
                       _formatDate(widget.awareness.createdDate),

@@ -30,14 +30,7 @@ class _AwarenessPageState extends State<AwarenessPage> {
                   );
                 }
 
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Number of columns
-                    mainAxisSpacing: 4.0, // Spacing between rows
-                    crossAxisSpacing: 4.0, // Spacing between columns
-                    childAspectRatio:
-                        1.0, // Aspect ratio of each item (adjust as needed)
-                  ),
+                return ListView.builder(
                   itemCount: state.awarenesss.length,
                   itemBuilder: (context, index) {
                     final awareness = state.awarenesss[index];

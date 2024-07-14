@@ -2,11 +2,10 @@ const Event = require('../models/Event');
 // Create Event
 exports.createEvent = async (req, res) => {
   console.log('Creating Event...');
-  const { id, title, description, date, time, image, organizer, rsvps } = req.body;
+  const { title, description, date, time, image, organizer, rsvps } = req.body;
 
   try {
     const newEvent = new Event({
-      id,
       title,
       description,
       date,
@@ -48,20 +47,19 @@ exports.getEventById = async (req, res) => {
 
 // Update Event by ID
 exports.updateEvent = async (req, res) => {
-  const { title, description, date, time, image, organizer } = req.body;
-  const updateFields = { title, description, date, time, organizer };
-
-  if (image) {
-    updateFields.image = image; // Base64 encoded image string or filename
-  }
+  console.log('Updating Event');
+  const {title, description, date, time, image, organizer,rsvps } = req.body;
+  const updateFields = {title, description, date, time, image, organizer, rsvps};
 
   try {
     const event = await Event.findByIdAndUpdate(req.params.id, updateFields, { new: true, runValidators: true });
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
+    console.log("Event updated sucessfully");
     res.status(200).json(event);
   } catch (err) {
+    console.log(err.message);
     res.status(400).json({ error: err.message });
   }
 };
@@ -75,6 +73,7 @@ exports.deleteEvent = async (req, res) => {
     }
     res.status(200).json({ message: 'Event deleted successfully' });
   } catch (err) {
+    console.log(err.message);
     res.status(400).json({ error: err.message });
   }
 };

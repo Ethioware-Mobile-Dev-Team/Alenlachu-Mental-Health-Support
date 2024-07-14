@@ -2,11 +2,10 @@ const Awareness = require('../models/awareness');
 
 // Create Awareness
 exports.createAwareness = async (req, res) => {
-  const {id, title, description, createdDate,image } = req.body;
+  const {title, description, createdDate,image } = req.body;
 
   try {
     const newAwareness = new Awareness({
-      id,
       title,
       description,
       createdDate,
@@ -45,22 +44,23 @@ exports.getAwarenessById = async (req, res) => {
 
 // Update Awareness by ID
 exports.updateAwareness = async (req, res) => {
-  const {id, title, description,createdDate, image } = req.body;
-  const updateFields = { title, description, createdDate };
-  if (image) {
-    updateFields.image = image; // Base64 encoded image string
-  }
+  console.log('Update:' + req.params.id);
+  const { title, description, createdDate, image } = req.body;
+  const updateFields = { title, description, createdDate, image };
 
   try {
-    const awareness = await Awareness.findByIdAndUpdate(req.params.id, updateFields, { new: true, runValidators: true });
+    const awareness = await Awareness.findByIdAndUpdate(req.params.id , updateFields, { new: true, runValidators: true });
     if (!awareness) {
       return res.status(404).json({ error: 'Awareness entry not found' });
     }
+    console.log('Awareness Updated successfully!!')
     res.status(200).json(awareness);
   } catch (err) {
+    console.log(err);
     res.status(400).json({ error: err.message });
   }
 };
+
 
 // Delete Awareness by ID
 exports.deleteAwareness = async (req, res) => {

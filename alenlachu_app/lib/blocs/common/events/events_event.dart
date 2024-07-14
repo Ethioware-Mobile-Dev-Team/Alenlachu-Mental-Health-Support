@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 import 'package:alenlachu_app/data/common/models/event/event_model.dart';
 
@@ -10,6 +12,12 @@ abstract class EventEvent extends Equatable {
 
 class LoadEvents extends EventEvent {}
 
+class UpdateEventImage extends EventEvent {
+  final Uint8List imageBytes;
+  final EventModel event;
+  const UpdateEventImage({required this.imageBytes, required this.event});
+}
+
 class CreateEvent extends EventEvent {
   final EventModel event;
 
@@ -20,13 +28,12 @@ class CreateEvent extends EventEvent {
 }
 
 class UpdateEvent extends EventEvent {
-  final String id;
   final EventModel event;
 
-  const UpdateEvent(this.id, this.event);
+  const UpdateEvent(this.event);
 
   @override
-  List<Object> get props => [id, event];
+  List<Object> get props => [event];
 }
 
 class DeleteEvent extends EventEvent {
