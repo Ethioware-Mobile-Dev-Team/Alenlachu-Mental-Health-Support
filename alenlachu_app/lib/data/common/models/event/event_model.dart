@@ -9,7 +9,7 @@ class EventModel extends Equatable {
   final String time;
   final Organizer organizer;
   final List<String> rsvps; // List of user IDs who have RSVP'd
-  String photo;
+  String? image;
 
   EventModel({
     required this.id,
@@ -19,7 +19,7 @@ class EventModel extends Equatable {
     required this.time,
     required this.organizer,
     this.rsvps = const [],
-    this.photo = "",
+    this.image,
   });
 
   Map<String, dynamic> toJson() {
@@ -31,7 +31,7 @@ class EventModel extends Equatable {
       'time': time,
       'organizer': organizer.toJson(),
       'rsvps': rsvps,
-      'photo': photo,
+      'image': image,
     };
   }
 
@@ -44,7 +44,7 @@ class EventModel extends Equatable {
       time: json['time'],
       organizer: Organizer.fromJson(json['organizer']),
       rsvps: List<String>.from(json['rsvps']),
-      photo: json['photo'],
+      image: json['image'],
     );
   }
 
@@ -57,6 +57,6 @@ class EventModel extends Equatable {
         time,
         organizer,
         rsvps,
-        photo,
+        image,
       ];
 }

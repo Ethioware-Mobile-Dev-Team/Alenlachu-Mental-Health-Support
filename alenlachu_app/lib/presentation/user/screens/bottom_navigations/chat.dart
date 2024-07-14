@@ -1,4 +1,3 @@
-import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:alenlachu_app/data/user/models/chat_message.dart';
@@ -63,9 +62,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(title: 'Assistant'),
-      body: Stack(
+    return SizedBox(
+      child: Stack(
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),

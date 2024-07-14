@@ -1,6 +1,5 @@
 import 'package:alenlachu_app/blocs/user/todo_bloc/todo_bloc.dart';
 import 'package:alenlachu_app/blocs/user/todo_bloc/todo_event.dart';
-import 'package:alenlachu_app/data/user/models/todo_model.dart';
 import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,9 +21,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Create Todo',
-      ),
+      appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

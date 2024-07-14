@@ -10,6 +10,10 @@ abstract class EventState extends Equatable {
 
 class EventInitial extends EventState {}
 
+class EventRSVPing extends EventState {}
+
+class EventUnRSVPing extends EventState {}
+
 class EventLoading extends EventState {}
 
 class EventLoaded extends EventState {

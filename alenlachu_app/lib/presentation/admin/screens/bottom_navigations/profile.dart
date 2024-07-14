@@ -1,5 +1,4 @@
 import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.dart';
-import 'package:alenlachu_app/blocs/common/authentication/authentication_event.dart';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
 import 'package:alenlachu_app/presentation/common/screens/authentication/login.dart';
 import 'package:alenlachu_app/presentation/common/widgets/profile_card.dart';
@@ -16,8 +15,8 @@ class AdminProfilePage extends StatefulWidget {
 class _AdminProfilePageState extends State<AdminProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocListener<AuthenticationBloc, AuthenticationState>(
+    return SizedBox(
+      child: BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           if (state is Unauthenticated) {
             Navigator.of(context).pushReplacement(

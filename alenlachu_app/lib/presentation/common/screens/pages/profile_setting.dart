@@ -2,13 +2,11 @@ import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.da
 import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
 import 'package:alenlachu_app/blocs/common/profile/profile_cubit.dart';
 import 'package:alenlachu_app/blocs/common/profile/profile_state.dart';
-import 'package:alenlachu_app/data/common/models/user_model.dart';
-import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
+
 import 'package:alenlachu_app/presentation/common/widgets/custome_button.dart';
 import 'package:alenlachu_app/presentation/common/widgets/form_container.dart';
 import 'package:alenlachu_app/presentation/common/widgets/message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileSetting extends StatefulWidget {
@@ -39,7 +37,13 @@ class _ProfileSettingState extends State<ProfileSetting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'Profile Setting'),
+        appBar: AppBar(
+          title: const Text(
+            'Profile',
+            style: TextStyle(color: Colors.white, fontSize: 14),
+          ),
+          centerTitle: true,
+        ),
         body: BlocListener<ProfileCubit, ProfileState>(
           listener: (context, state) {
             if (state is Updating) {
@@ -74,7 +78,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                                 await BlocProvider.of<ProfileCubit>(context)
                                     .pickImage();
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.camera_alt,
                                 color: Colors.blue,
                               ),

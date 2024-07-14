@@ -45,12 +45,12 @@ class ProfileCard extends StatelessWidget {
                     child: Row(
                       children: [
                         Icon(Icons.person),
-                        const SizedBox(
+                        SizedBox(
                           width: 10,
                         ),
                         Text("Profile"),
-                        const Spacer(),
-                        const Icon(Icons.navigate_next)
+                        Spacer(),
+                        Icon(Icons.navigate_next)
                       ],
                     ),
                   ),

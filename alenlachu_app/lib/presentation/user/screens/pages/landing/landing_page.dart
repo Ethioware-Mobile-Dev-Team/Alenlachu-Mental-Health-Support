@@ -1,10 +1,10 @@
 import 'package:alenlachu_app/blocs/user/bottom_navigation_cubit/user_bottom_navigation_cubit.dart';
+import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/chat.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/discover.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/home.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/profile.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/todo.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,142 +19,53 @@ class _UserLandingPageState extends State<UserLandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(),
       body: BlocBuilder<UserBottomNavigationCubit, UserBottomNavigationState>(
-          builder: (context, state) {
-        switch (state) {
-          case UserBottomNavigationState.home:
-            return const UserHomePage();
-          case UserBottomNavigationState.todo:
-            return const TodoPlannerPage();
-          case UserBottomNavigationState.discover:
-            return const DiscoverPage();
-          case UserBottomNavigationState.chat:
-            return const ChatPage();
-          case UserBottomNavigationState.profile:
-            return const UserProfilePage();
-          default:
-            return const UserHomePage();
-        }
-      }),
+        builder: (context, state) {
+          switch (state) {
+            case UserBottomNavigationState.home:
+              return const UserHomePage();
+            case UserBottomNavigationState.todo:
+              return const TodoPlannerPage();
+            case UserBottomNavigationState.discover:
+              return const DiscoverPage();
+            case UserBottomNavigationState.chat:
+              return const ChatPage();
+            case UserBottomNavigationState.profile:
+              return const UserProfilePage();
+            default:
+              return const UserHomePage();
+          }
+        },
+      ),
       bottomNavigationBar:
           BlocBuilder<UserBottomNavigationCubit, UserBottomNavigationState>(
         builder: (context, state) {
-          return CurvedNavigationBar(
-            height: 65,
-            animationDuration: const Duration(milliseconds: 200),
-            animationCurve: Curves.decelerate,
-            index: UserBottomNavigationState.values.indexOf(state),
-            backgroundColor: Colors.white,
-            buttonBackgroundColor: Theme.of(context).primaryColor,
-            color: Theme.of(context).primaryColor,
-            items: <Widget>[
-              Padding(
-                padding: state != UserBottomNavigationState.home
-                    ? const EdgeInsets.only(top: 20.0)
-                    : const EdgeInsets.all(0),
-                child: Column(
-                  children: [
-                    const Icon(
-                      Icons.home,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                    Visibility(
-                        visible: state != UserBottomNavigationState.home,
-                        child: const Text(
-                          'Home',
-                          style: TextStyle(color: Colors.white),
-                        ))
-                  ],
-                ),
+          return BottomNavigationBar(
+            currentIndex: UserBottomNavigationState.values.indexOf(state),
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: Theme.of(context).primaryColor,
+            unselectedItemColor: Colors.grey,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
               ),
-              Padding(
-                padding: state != UserBottomNavigationState.todo
-                    ? const EdgeInsets.only(top: 20.0)
-                    : const EdgeInsets.all(0),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.task_alt_rounded,
-                      size: 30,
-                      color: Theme.of(context).colorScheme.surface,
-                    ),
-                    Visibility(
-                      visible: state != UserBottomNavigationState.todo,
-                      child: Text(
-                        'Todo',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.surface),
-                      ),
-                    )
-                  ],
-                ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.task_alt_rounded),
+                label: 'Todo',
               ),
-              Padding(
-                padding: state != UserBottomNavigationState.discover
-                    ? const EdgeInsets.only(top: 20.0)
-                    : const EdgeInsets.all(0),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      size: 30,
-                      color: Theme.of(context).colorScheme.surface,
-                    ),
-                    Visibility(
-                      visible: state != UserBottomNavigationState.discover,
-                      child: Text(
-                        'Discover',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.surface),
-                      ),
-                    )
-                  ],
-                ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'Discover',
               ),
-              Padding(
-                padding: state != UserBottomNavigationState.chat
-                    ? const EdgeInsets.only(top: 20.0)
-                    : const EdgeInsets.all(0),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.chat,
-                      size: 30,
-                      color: Theme.of(context).colorScheme.surface,
-                    ),
-                    Visibility(
-                      visible: state != UserBottomNavigationState.chat,
-                      child: Text(
-                        'Chat',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.surface),
-                      ),
-                    )
-                  ],
-                ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.chat),
+                label: 'Chat',
               ),
-              Padding(
-                padding: state != UserBottomNavigationState.profile
-                    ? const EdgeInsets.only(top: 20.0)
-                    : const EdgeInsets.all(0),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.person,
-                      size: 30,
-                      color: Theme.of(context).colorScheme.surface,
-                    ),
-                    Visibility(
-                      visible: state != UserBottomNavigationState.profile,
-                      child: Text(
-                        'Profile',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.surface),
-                      ),
-                    )
-                  ],
-                ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
               ),
             ],
             onTap: (index) {

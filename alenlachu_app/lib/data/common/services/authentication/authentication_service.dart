@@ -93,4 +93,15 @@ class AuthServices {
     final user = _auth.currentUser;
     return user?.uid;
   }
+
+  Future<int> getTotalUserCount() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await _db.collection('users').where('role', isEqualTo: 'user').get();
+      return snapshot.size;
+    } catch (e) {
+      showToast(e.toString());
+      return 0;
+    }
+  }
 }

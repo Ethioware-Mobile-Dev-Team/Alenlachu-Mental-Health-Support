@@ -1,34 +1,27 @@
+import 'package:alenlachu_app/blocs/admin/bottom_navigation_cubit/admin_bottom_navigation_cubit.dart';
+import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.dart';
+import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.dart';
-import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
-import 'package:alenlachu_app/blocs/user/bottom_navigation_cubit/user_bottom_navigation_cubit.dart';
-
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const AdminAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBottomNavigationCubit, UserBottomNavigationState>(
+    return BlocBuilder<AdminBottomNavigationCubit, AdminBottomNavigationState>(
       builder: (context, state) {
         String title = '';
 
         // Set title based on current navigation state
         switch (state) {
-          case UserBottomNavigationState.home:
+          case AdminBottomNavigationState.home:
             title = 'Home';
             break;
-          case UserBottomNavigationState.todo:
-            title = 'Todo';
+          case AdminBottomNavigationState.post:
+            title = 'Post';
             break;
-          case UserBottomNavigationState.discover:
-            title = 'Discover';
-            break;
-          case UserBottomNavigationState.chat:
-            title = 'Chat';
-            break;
-          case UserBottomNavigationState.profile:
+          case AdminBottomNavigationState.profile:
             title = 'Profile';
             break;
           default:

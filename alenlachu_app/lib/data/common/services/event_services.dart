@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/common/models/event/event_model.dart';
 
 class EventService {
-  final String baseUrl = 'http://192.168.99.212:3000/api/events';
+  final String baseUrl = 'http://192.168.7.212:3000';
 
   EventService();
 
@@ -39,9 +39,11 @@ class EventService {
     );
 
     if (response.statusCode == 201) {
+      showToast("Event Created successfully");
+      showToast(response.body);
       return EventModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to create event ${response.statusCode}');
+      throw Exception('Failed to create event ${response.request}');
     }
   }
 
@@ -79,9 +81,10 @@ class EventService {
     );
 
     if (response.statusCode == 200) {
+      showToast("Event successfully");
       return EventModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to RSVP to event');
+      throw Exception('Failed to RSVP to event ${response.request}');
     }
   }
 

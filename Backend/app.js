@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const chatRoutes = require('./routes/chat_routes');
 const eventRoutes = require('./routes/events');
-const announcementRoutes = require('./routes/announcements');
+const awarenessRoutes = require('./routes/awareness');
 const dotenv = require('dotenv').config()
 
 
@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 app.use('/api', chatRoutes);
 app.use('/api/events', eventRoutes);
-app.use('/api/announcements', announcementRoutes);
+app.use('/api/awareness', awarenessRoutes);
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');

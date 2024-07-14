@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class ImageCarousel extends StatefulWidget {
+  const ImageCarousel({super.key});
+
   @override
   _ImageCarouselState createState() => _ImageCarouselState();
 }
@@ -41,7 +43,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
           carouselController: _controller,
           options: CarouselOptions(
             autoPlay: true,
-            aspectRatio: 3.0,
+            aspectRatio: 4.0,
             enlargeCenterPage: true,
             onPageChanged: (index, reason) {
               setState(() {
@@ -58,7 +60,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
               child: Container(
                 width: 7.0,
                 height: 7.0,
-                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: (Theme.of(context).brightness == Brightness.dark

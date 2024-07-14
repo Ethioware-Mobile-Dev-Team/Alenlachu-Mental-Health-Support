@@ -1,17 +1,19 @@
 const Event = require('../models/Event');
-
 // Create Event
 exports.createEvent = async (req, res) => {
-  const { title, description, date, time, image, organizer } = req.body;
+  console.log('Creating Event...');
+  const { id, title, description, date, time, image, organizer, rsvps } = req.body;
 
   try {
     const newEvent = new Event({
+      id,
       title,
       description,
       date,
       time,
       image, // Base64 encoded image string or filename
-      organizer
+      organizer,
+      rsvps  // Initialize rsvps as an empty array
     });
 
     await newEvent.save();
@@ -77,16 +79,21 @@ exports.deleteEvent = async (req, res) => {
   }
 };
 
-// RSVP to Event
 exports.rsvpEvent = async (req, res) => {
+  console.log('RSVPing  Event...');
   try {
     const event = await Event.findById(req.params.id);
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
 
-    // Assuming req.userId contains the ID of the authenticated user
-    const userId = req.userId;
+    const userId = req.body.userId; // Get userId from request body
+    console.log(userId);
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    console.log(`RSVP Attempt: eventId=${req.params.id}, userId=${userId}`);
 
     if (!event.rsvps.includes(userId)) {
       event.rsvps.push(userId);
@@ -97,12 +104,11 @@ exports.rsvpEvent = async (req, res) => {
     await event.save();
     res.status(200).json(event);
   } catch (err) {
+    console.error(err);
     res.status(400).json({ error: err.message });
   }
 };
 
-
-// Cancel RSVP to Event
 exports.unRsvpEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
@@ -110,14 +116,23 @@ exports.unRsvpEvent = async (req, res) => {
       return res.status(404).json({ error: 'Event not found' });
     }
 
-    // Assuming req.body.userId contains the ID of the user making the request
-    const userId = req.body.userId;
+    const userId = req.body.userId; 
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
 
-    event.rsvps = event.rsvps.filter(rsvpId => rsvpId.toString() !== userId);
+    console.log(`Un-RSVP Attempt: eventId=${req.params.id}, userId=${userId}`);
+
+    if (event.rsvps.includes(userId)) {
+      event.rsvps = event.rsvps.filter(id => id !== userId);
+    } else {
+      return res.status(400).json({ error: 'User has not RSVP\'d' });
+    }
+
     await event.save();
-
     res.status(200).json(event);
   } catch (err) {
+    console.error(err);
     res.status(400).json({ error: err.message });
   }
 };

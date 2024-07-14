@@ -1,7 +1,6 @@
 import 'package:alenlachu_app/blocs/common/events/events_event.dart';
 import 'package:alenlachu_app/blocs/common/events/events_state.dart';
 import 'package:alenlachu_app/data/common/services/event_services.dart';
-import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EventBloc extends Bloc<EventEvent, EventState> {
@@ -61,10 +60,10 @@ class EventBloc extends Bloc<EventEvent, EventState> {
   }
 
   Future<void> _onRSVPEvent(RSVPEvent event, Emitter<EventState> emit) async {
+    emit(EventRSVPing());
     try {
       final updatedEvent =
           await eventService.rsvpEvent(event.eventId, event.userId);
-      emit(EventOperationSuccess(updatedEvent));
       add(LoadEvents());
     } catch (e) {
       emit(EventOperationFailure(e.toString()));
@@ -73,10 +72,10 @@ class EventBloc extends Bloc<EventEvent, EventState> {
 
   Future<void> _onUnRSVPEvent(
       UnRSVPEvent event, Emitter<EventState> emit) async {
+    emit(EventUnRSVPing());
     try {
       final updatedEvent =
           await eventService.unRsvpEvent(event.eventId, event.userId);
-      emit(EventOperationSuccess(updatedEvent));
       add(LoadEvents());
     } catch (e) {
       emit(EventOperationFailure(e.toString()));

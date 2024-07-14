@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/user/models/chat_message.dart';
 
 class ChatService {
-  static const String _baseUrl = 'http://192.168.99.212:3000/api';
+  static const String _baseUrl = 'http://192.168.7.212:3000/api';
 
   static Future<List<ChatMessage>> getChatHistory() async {
     final userId = FirebaseAuth.instance.currentUser?.uid;
@@ -13,7 +13,7 @@ class ChatService {
         await http.get(Uri.parse('$_baseUrl/chat-history?userId=$userId'));
     if (response.statusCode == 200) {
       final List<dynamic> chatHistoryJson = json.decode(response.body);
-      showToast("Feching data......");
+      showToast("Feching data......${response.request}");
       return chatHistoryJson.map((json) => ChatMessage.fromJson(json)).toList();
     } else {
       showToast("Erorrr");
