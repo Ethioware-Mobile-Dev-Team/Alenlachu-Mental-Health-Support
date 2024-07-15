@@ -1,15 +1,16 @@
 import 'dart:convert';
 import 'package:alenlachu_app/data/common/models/awareness/awareness_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AwarenessService {
-  static const String baseUrl =
-      'http://192.168.7.212:3000'; // Replace with your backend base URL
+  final String? ipAddress = dotenv.env["IP_ADDRESS"];
+  late final String? _baseUrl = 'http://$ipAddress:3000/api';
 
   // Create an Awareness Entry
   Future<AwarenessModel> createAwareness(AwarenessModel awareness) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/api/awareness'),
+      Uri.parse('$_baseUrl/awareness'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -25,7 +26,7 @@ class AwarenessService {
 
   // Get All Awareness Entries
   Future<List<AwarenessModel>> getAwarenessEntries() async {
-    final response = await http.get(Uri.parse('$baseUrl/api/awareness'));
+    final response = await http.get(Uri.parse('$_baseUrl/awareness'));
 
     if (response.statusCode == 200) {
       Iterable list = jsonDecode(response.body);
@@ -37,7 +38,7 @@ class AwarenessService {
 
   // Get Awareness Entry by ID
   Future<AwarenessModel> getAwarenessById(String id) async {
-    final response = await http.get(Uri.parse('$baseUrl/api/awareness/$id'));
+    final response = await http.get(Uri.parse('$_baseUrl/awareness/$id'));
 
     if (response.statusCode == 200) {
       return AwarenessModel.fromJson(jsonDecode(response.body));
@@ -50,7 +51,7 @@ class AwarenessService {
   Future<AwarenessModel> updateAwareness(
       AwarenessModel updatedAwareness) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/api/awareness/${updatedAwareness.id}'),
+      Uri.parse('$_baseUrl/awareness/${updatedAwareness.id}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -66,7 +67,7 @@ class AwarenessService {
 
   // Delete Awareness Entry
   Future<void> deleteAwareness(String id) async {
-    final response = await http.delete(Uri.parse('$baseUrl/api/awareness/$id'));
+    final response = await http.delete(Uri.parse('$_baseUrl/awareness/$id'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to delete awareness entry');

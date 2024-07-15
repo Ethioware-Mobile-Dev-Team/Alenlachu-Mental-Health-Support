@@ -3,11 +3,13 @@ import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/user/models/chat_message.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatService {
-  static const String _baseUrl = 'http://192.168.7.212:3000/api';
+  final String? ipAddress = dotenv.env["IP_ADDRESS"];
+  late final String? _baseUrl = 'http://$ipAddress:3000/api';
 
-  static Future<List<ChatMessage>> getChatHistory() async {
+  Future<List<ChatMessage>> getChatHistory() async {
     final userId = FirebaseAuth.instance.currentUser?.uid;
     final response =
         await http.get(Uri.parse('$_baseUrl/chat-history?userId=$userId'));
@@ -21,7 +23,7 @@ class ChatService {
     }
   }
 
-  static Future<String> sendMessage(String message) async {
+ Future<String> sendMessage(String message) async {
     final userId = FirebaseAuth.instance.currentUser?.uid;
     // showToast("Feching data......");
     final response = await http.post(
