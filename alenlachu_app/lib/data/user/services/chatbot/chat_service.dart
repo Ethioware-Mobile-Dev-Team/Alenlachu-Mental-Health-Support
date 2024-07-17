@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/user/models/chat_message.dart';
 
 class ChatService {
-  static const String _baseUrl = 'http://192.168.7.212:3000/api';
+  static const String _baseUrl = 'http://192.168.54.212:3000/api';
 
   static Future<List<ChatMessage>> getChatHistory() async {
     final userId = FirebaseAuth.instance.currentUser?.uid;

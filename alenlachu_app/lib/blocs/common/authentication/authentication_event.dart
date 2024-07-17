@@ -36,3 +36,16 @@ class SignUpRequested extends AuthenticationEvent {
   SignUpRequested(
       {required this.name, required this.email, required this.password});
 }
+
+class VerifyPhoneNumber extends AuthenticationEvent {
+  final String phoneNumber;
+  VerifyPhoneNumber({required this.phoneNumber});
+}
+
+class SignInWithPhoneNumber extends AuthenticationEvent {
+  final String verificationId;
+  final String verificationCode;
+
+  SignInWithPhoneNumber(
+      {required this.verificationId, required this.verificationCode});
+}

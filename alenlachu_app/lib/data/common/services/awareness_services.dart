@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class AwarenessService {
   static const String baseUrl =
-      'http://192.168.7.212:3000'; // Replace with your backend base URL
+      'http://192.168.54.212:3000'; // Replace with your backend base URL
 
   // Create an Awareness Entry
   Future<AwarenessModel> createAwareness(AwarenessModel awareness) async {

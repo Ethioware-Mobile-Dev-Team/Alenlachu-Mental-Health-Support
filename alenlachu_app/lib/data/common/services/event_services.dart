@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/common/models/event/event_model.dart';
 
 class EventService {
-  final String baseUrl = 'http://192.168.7.212:3000';
+  final String baseUrl = 'http://192.168.54.212:3000';
 
   EventService();
 

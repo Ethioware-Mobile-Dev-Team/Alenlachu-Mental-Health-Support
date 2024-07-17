@@ -18,6 +18,7 @@ import 'package:alenlachu_app/presentation/admin/screens/pages/awareness/create_
 import 'package:alenlachu_app/presentation/admin/screens/pages/event/create_event.dart';
 import 'package:alenlachu_app/presentation/admin/screens/pages/landing/landing_page.dart';
 import 'package:alenlachu_app/presentation/common/screens/authentication/login.dart';
+import 'package:alenlachu_app/presentation/common/screens/authentication/phone_auth.dart';
 import 'package:alenlachu_app/presentation/common/screens/pages/profile_setting.dart';
 import 'package:alenlachu_app/presentation/common/widgets/custome_theme.dart';
 import 'package:alenlachu_app/presentation/user/screens/pages/create_todo-page.dart';
@@ -55,8 +56,7 @@ class _MainAppState extends State<MainApp> {
                   context.read<AuthenticationBloc>().authServices,
                   context.read<AuthenticationBloc>())),
           BlocProvider(create: (context) => AdminBottomNavigationCubit()),
-          BlocProvider(
-              create: (context) => TodoBloc(TodoService())..add(LoadTodos())),
+          BlocProvider(create: (context) => TodoBloc(TodoService())),
           BlocProvider(
               create: (context) =>
                   EventBloc(EventService())..add(LoadEvents())),

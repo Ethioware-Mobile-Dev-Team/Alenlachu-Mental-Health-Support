@@ -16,6 +16,36 @@ class AuthenticationBloc
     on<LoggedOut>(_onLoggedOut);
     on<LoginRequested>(_onLoginRequested);
     on<SignUpRequested>(_onSignUpRequested);
+    on<VerifyPhoneNumber>(_onVerifyPhoneNumber);
+    on<SignInWithPhoneNumber>(_onSignInWithPhoneNumber);
+  }
+
+  void _onVerifyPhoneNumber(
+      VerifyPhoneNumber event, Emitter<AuthenticationState> emit) async {
+    emit(Authenticating());
+    await authServices.verifyPhoneNumber(
+      event.phoneNumber,
+      (verficationId) {
+        emit(VerifyPhoneAuthenticationCode(verficationId));
+      },
+      (error) {
+        emit(AuthenticationFailure(error));
+      },
+    );
+  }
+
+  void _onSignInWithPhoneNumber(
+      SignInWithPhoneNumber event, Emitter<AuthenticationState> emit) async {
+    emit(Authenticating());
+    final result = await authServices.signInWithPhoneNumber(
+        event.verificationId, event.verificationCode);
+    if (result != null) {
+      showToast("Finally User Authenticated!!!");
+      emit(Authenticated(user: result));
+    } else {
+      showToast("UnAuthenticated!!!");
+      emit(Unauthenticated());
+    }
   }
 
   void _onAppStarted(

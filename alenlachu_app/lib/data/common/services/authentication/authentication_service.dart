@@ -1,8 +1,13 @@
+import 'dart:developer';
+
+import 'package:alenlachu_app/blocs/user/todo_bloc/todo_bloc.dart';
+import 'package:alenlachu_app/blocs/user/todo_bloc/todo_event.dart';
 import 'package:alenlachu_app/core/common/login_manager.dart';
 import 'package:alenlachu_app/data/common/models/user_model.dart';
 import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthServices {
   final _auth = auth.FirebaseAuth.instance;
@@ -46,6 +51,7 @@ class AuthServices {
       if (doc.exists) {
         UserModel userModel = UserModel.fromSnapshot(doc.data()!);
         await LoginManager.saveUser(userModel);
+
         return userModel;
       }
     } catch (e) {
@@ -103,5 +109,73 @@ class AuthServices {
       showToast(e.toString());
       return 0;
     }
+  }
+
+  Future<void> verifyPhoneNumber(String phoneNumber, Function(String) codeSent,
+      Function(String) verificationFailed) async {
+    try {
+      log('Verifying phone number');
+      await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (auth.PhoneAuthCredential credential) async {
+          // Auto-retrieval or instant verification succeeded.
+          await _auth.signInWithCredential(credential);
+          log('Phone number automatically verified and user signed in');
+          showToast('Phone number automatically verified and user signed in');
+        },
+        verificationFailed: (auth.FirebaseAuthException e) {
+          log('Verification Faild for $phoneNumber');
+          showToast(
+              '##################Phone number verification failed: ${e.message}');
+          log('######################Phone number verification failed: ${e.message}');
+          verificationFailed(e.message ?? 'Unknown error');
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          log('Verification code sent to $phoneNumber');
+          showToast('Verification code sent to $phoneNumber');
+          codeSent(verificationId);
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          // Auto-retrieval timeout.
+          showToast('Code auto-retrieval timeout');
+        },
+      );
+    } catch (e) {
+      showToast('Failed to verify phone number: $e');
+
+      log('########################$e');
+      verificationFailed(e.toString());
+    }
+  }
+
+  Future<UserModel?> signInWithPhoneNumber(
+      String verificationId, String smsCode) async {
+    try {
+      final auth.AuthCredential credential = auth.PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      );
+      auth.UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      auth.User? user = userCredential.user;
+      if (user != null) {
+        DocumentSnapshot<Map<String, dynamic>> doc =
+            await _db.collection('users').doc(user.uid).get();
+        UserModel userModel;
+        if (doc.exists) {
+          userModel = UserModel.fromSnapshot(doc.data()!);
+        } else {
+          userModel =
+              UserModel(id: user.uid, name: '', email: '', password: '');
+          await _db.collection('users').doc(user.uid).set(userModel.toJson());
+        }
+        await LoginManager.saveUser(userModel);
+        return userModel;
+      }
+    } catch (e) {
+      showToast('Failed to sign in with phone number: $e');
+      return null;
+    }
+    return null;
   }
 }

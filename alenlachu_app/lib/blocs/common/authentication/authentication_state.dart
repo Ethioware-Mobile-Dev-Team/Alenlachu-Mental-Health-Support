@@ -28,3 +28,11 @@ class AuthenticationFailure extends AuthenticationState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+class VerifyPhoneAuthenticationCode extends AuthenticationState {
+  final String verficationId;
+  VerifyPhoneAuthenticationCode(this.verficationId);
+
+  @override
+  List<Object> get props => [verficationId];
+}

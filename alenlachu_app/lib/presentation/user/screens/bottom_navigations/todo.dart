@@ -18,6 +18,12 @@ class _TodoPlannerPageState extends State<TodoPlannerPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<TodoBloc>(context).add(LoadTodos());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: _onRefresh,
