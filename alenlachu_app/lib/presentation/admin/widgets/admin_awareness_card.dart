@@ -75,16 +75,10 @@ class _AdminAwarenessCardState extends State<AdminAwarenessCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        BlocProvider.of<AwarenessBloc>(context)
-                            .add(DeleteAwareness(widget.awareness.id!));
-                      },
-                      child: Text(
-                        widget.awareness.title,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
+                    Text(
+                      widget.awareness.title,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       _formatDate(widget.awareness.createdDate),

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/common/models/event/event_model.dart';
 
 class EventService {
-  late final String? _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
+  final String _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
 
   EventService();
 

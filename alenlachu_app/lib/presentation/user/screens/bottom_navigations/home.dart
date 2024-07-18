@@ -69,7 +69,7 @@ class _UserHomePageState extends State<UserHomePage> {
                         color: Colors.black,
                       ),
                       SizedBox(
-                        height: 260,
+                        height: MediaQuery.of(context).size.height * 0.32,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: BlocBuilder<EventBloc, EventState>(
@@ -110,9 +110,12 @@ class _UserHomePageState extends State<UserHomePage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      const Text("Did you know that?"),
+                      const StyledText(
+                        lable: "Did You Know That?",
+                        color: Colors.black,
+                      ),
                       SizedBox(
-                        height: 250,
+                        height: MediaQuery.of(context).size.height * 0.32,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: BlocBuilder<AwarenessBloc, AwarenessState>(

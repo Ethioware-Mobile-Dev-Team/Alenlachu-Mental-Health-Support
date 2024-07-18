@@ -72,7 +72,7 @@ class _EventCardState extends State<EventCard> {
                 builder: (context) => EventDetailPage(event: widget.event)));
           },
           child: Container(
-            height: 210,
+            height: MediaQuery.of(context).size.height * 0.3,
             width: 200,
             decoration: const BoxDecoration(
                 color: Colors.white,
@@ -108,6 +108,8 @@ class _EventCardState extends State<EventCard> {
                         StyledText(
                           lable: widget.event.title,
                           color: Colors.black,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                         Row(
                           children: [

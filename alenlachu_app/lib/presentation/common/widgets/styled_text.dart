@@ -5,21 +5,30 @@ class StyledText extends StatelessWidget {
   final double size;
   final Color color;
   final bool isBold;
-  const StyledText(
-      {super.key,
-      required this.lable,
-      this.size = 18,
-      this.color = Colors.white,
-      this.isBold = true});
+  final TextOverflow overflow;
+  final int? maxLines;
+
+  const StyledText({
+    super.key,
+    required this.lable,
+    this.size = 18,
+    this.color = Colors.white,
+    this.isBold = true,
+    this.overflow = TextOverflow.visible,
+    this.maxLines,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       lable,
+      maxLines: maxLines,
+      overflow: overflow,
       style: TextStyle(
-          fontSize: size,
-          color: color,
-          fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
+        fontSize: size,
+        color: color,
+        fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+      ),
     );
   }
 }
