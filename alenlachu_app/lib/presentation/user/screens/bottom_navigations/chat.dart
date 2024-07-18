@@ -13,6 +13,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _chatController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+    final ChatService _chatService = ChatService();
   List<ChatMessage> _chatHistory = [];
 
   @override
@@ -22,7 +23,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _loadChatHistory() async {
-    final history = await ChatService.getChatHistory();
+    final history = await _chatService.getChatHistory();
     setState(() {
       _chatHistory = history;
     });
@@ -41,7 +42,7 @@ class _ChatPageState extends State<ChatPage> {
         _chatController.clear();
       });
       _scrollToBottom();
-      final reply = await ChatService.sendMessage(message);
+      final reply = await _chatService.sendMessage(message);
       setState(() {
         _chatHistory.add(ChatMessage(
           userId: FirebaseAuth.instance.currentUser?.uid ?? '',

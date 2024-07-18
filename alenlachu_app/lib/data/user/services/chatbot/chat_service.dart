@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/user/models/chat_message.dart';
 
 class ChatService {
-  static const String _baseUrl = 'http://192.168.54.212:3000/api';
+  late final String? _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
 
-  static Future<List<ChatMessage>> getChatHistory() async {
+  Future<List<ChatMessage>> getChatHistory() async {
     final userId = FirebaseAuth.instance.currentUser?.uid;
     final response =
         await http.get(Uri.parse('$_baseUrl/chat-history?userId=$userId'));
@@ -21,7 +21,7 @@ class ChatService {
     }
   }
 
-  static Future<String> sendMessage(String message) async {
+  Future<String> sendMessage(String message) async {
     final userId = FirebaseAuth.instance.currentUser?.uid;
     // showToast("Feching data......");
     final response = await http.post(

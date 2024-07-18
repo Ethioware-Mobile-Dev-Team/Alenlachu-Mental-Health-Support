@@ -18,7 +18,6 @@ void main() async {
 
     final AuthServices authServices = AuthServices();
     UserModel? user = await LoginManager.getUser();
-
     runApp(BlocProvider(
       create: (context) => AuthenticationBloc(authServices),
       child: MainApp(user: user),
