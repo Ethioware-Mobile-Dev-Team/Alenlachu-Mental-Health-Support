@@ -2,11 +2,9 @@ import 'dart:convert';
 import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/common/models/event/event_model.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EventService {
-  final String? ipAddress = dotenv.env["IP_ADDRESS"];
-  late final String? _baseUrl = 'http://$ipAddress:3000/api';
+  late final String? _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
 
   EventService();
 

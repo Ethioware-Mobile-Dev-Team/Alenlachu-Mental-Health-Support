@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:alenlachu_app/data/common/models/awareness/awareness_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AwarenessService {
-  final String? ipAddress = dotenv.env["IP_ADDRESS"];
-  late final String? _baseUrl = 'http://$ipAddress:3000/api';
+  late final String? _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
 
   // Create an Awareness Entry
   Future<AwarenessModel> createAwareness(AwarenessModel awareness) async {

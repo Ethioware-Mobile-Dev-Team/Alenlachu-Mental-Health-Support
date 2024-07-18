@@ -3,11 +3,9 @@ import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/user/models/chat_message.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatService {
-  final String? ipAddress = dotenv.env["IP_ADDRESS"];
-  late final String? _baseUrl = 'http://$ipAddress:3000/api';
+  late final String? _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
 
   Future<List<ChatMessage>> getChatHistory() async {
     final userId = FirebaseAuth.instance.currentUser?.uid;
