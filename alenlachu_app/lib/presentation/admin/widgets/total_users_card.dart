@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:alenlachu_app/data/common/services/authentication/authentication_service.dart';
 import 'package:flutter/material.dart';

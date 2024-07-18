@@ -1,15 +1,15 @@
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_bloc.dart';
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_event.dart';
-import 'package:alenlachu_app/data/user/models/todo_model.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_bloc.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_event.dart';
+import 'package:alenlachu_app/data/user/models/journal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TodoCard extends StatelessWidget {
-  final TodoModel todo;
+class JournalCard extends StatelessWidget {
+  final JournalModel journal;
   // final VoidCallback onDelete;
 
-  const TodoCard({
-    required this.todo,
+  const JournalCard({
+    required this.journal,
     //required this.onDelete,
     super.key,
   });
@@ -17,7 +17,7 @@ class TodoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(todo.id), // Unique key for each todo card
+      key: Key(journal.id), // Unique key for each todo card
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
@@ -43,7 +43,9 @@ class TodoCard extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    context.read<TodoBloc>().add(RemoveTodo(todo: todo));
+                    context
+                        .read<JournalBloc>()
+                        .add(RemoveJournal(journal: journal));
                     Navigator.of(context).pop(true);
                   },
                   child: const Text("Delete"),
@@ -63,48 +65,48 @@ class TodoCard extends StatelessWidget {
         elevation: 3,
         margin: const EdgeInsets.all(10),
         child: ListTile(
-          title: Text(todo.title),
+          title: Text(journal.title),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Deadline: ${todo.deadline}'),
-              Text('Created Date: ${todo.createdDate}'),
+              Text('Deadline: ${journal.deadline}'),
+              Text('Created Date: ${journal.createdDate}'),
             ],
           ),
           trailing: IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              _showEditDialog(context, todo);
+              _showEditDialog(context, journal);
             },
           ),
           onTap: () {
-            _showDetailsDialog(context, todo);
+            _showDetailsDialog(context, journal);
           },
         ),
       ),
     );
   }
 
-  void _showEditDialog(BuildContext context, TodoModel todo) {
+  void _showEditDialog(BuildContext context, JournalModel journal) {
     // Implement edit dialog using TodoBloc
     // Dispatch an EditTodo event to update the todo
   }
 
-  void _showDetailsDialog(BuildContext context, TodoModel todo) {
+  void _showDetailsDialog(BuildContext context, JournalModel journal) {
     // Implement details dialog here
     // Display all details about the todo
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(todo.title),
+          title: Text(journal.title),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Description: ${todo.description}'),
-              Text('Deadline: ${todo.deadline}'),
-              Text('Created Date: ${todo.createdDate}'),
+              Text('Description: ${journal.description}'),
+              Text('Deadline: ${journal.deadline}'),
+              Text('Created Date: ${journal.createdDate}'),
             ],
           ),
           actions: [

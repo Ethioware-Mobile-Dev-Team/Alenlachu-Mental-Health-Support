@@ -8,23 +8,21 @@ import 'package:alenlachu_app/blocs/common/events/events_bloc.dart';
 import 'package:alenlachu_app/blocs/common/events/events_event.dart';
 import 'package:alenlachu_app/blocs/common/profile/profile_cubit.dart';
 import 'package:alenlachu_app/blocs/user/bottom_navigation_cubit/user_bottom_navigation_cubit.dart';
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_bloc.dart';
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_event.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_bloc.dart';
 import 'package:alenlachu_app/data/common/models/user_model.dart';
 import 'package:alenlachu_app/data/common/services/awareness_services.dart';
 import 'package:alenlachu_app/data/common/services/event_services.dart';
-import 'package:alenlachu_app/data/user/services/todo_services.dart';
+import 'package:alenlachu_app/data/user/services/Journal_services.dart';
+import 'package:alenlachu_app/data/user/services/journal_services.dart';
 import 'package:alenlachu_app/presentation/admin/screens/pages/awareness/create_awareness.dart';
 import 'package:alenlachu_app/presentation/admin/screens/pages/event/create_event.dart';
 import 'package:alenlachu_app/presentation/admin/screens/pages/landing/landing_page.dart';
 import 'package:alenlachu_app/presentation/common/screens/authentication/login.dart';
-import 'package:alenlachu_app/presentation/common/screens/authentication/phone_auth.dart';
 import 'package:alenlachu_app/presentation/common/screens/authentication/signup.dart';
-import 'package:alenlachu_app/presentation/common/screens/pages/event_detail_page.dart';
 import 'package:alenlachu_app/presentation/common/screens/pages/profile_setting.dart';
 import 'package:alenlachu_app/presentation/common/screens/splash_screens/splash_screen.dart';
 import 'package:alenlachu_app/presentation/common/widgets/custome_theme.dart';
-import 'package:alenlachu_app/presentation/user/screens/pages/create_todo-page.dart';
+import 'package:alenlachu_app/presentation/user/screens/pages/create_journal_page.dart';
 import 'package:alenlachu_app/presentation/user/screens/pages/landing/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +57,7 @@ class _MainAppState extends State<MainApp> {
                   context.read<AuthenticationBloc>().authServices,
                   context.read<AuthenticationBloc>())),
           BlocProvider(create: (context) => AdminBottomNavigationCubit()),
-          BlocProvider(create: (context) => TodoBloc(TodoService())),
+          BlocProvider(create: (context) => JournalBloc(JournalService())),
           BlocProvider(
               create: (context) =>
                   EventBloc(EventService())..add(LoadEvents())),

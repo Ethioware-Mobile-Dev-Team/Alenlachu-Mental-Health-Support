@@ -1,7 +1,7 @@
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_bloc.dart';
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_event.dart';
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_state.dart';
-import 'package:alenlachu_app/presentation/user/widgets/todo_card.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_bloc.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_event.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_state.dart';
+import 'package:alenlachu_app/presentation/user/widgets/journal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,13 +14,13 @@ class TodoPlannerPage extends StatefulWidget {
 
 class _TodoPlannerPageState extends State<TodoPlannerPage> {
   Future<void> _onRefresh() async {
-    BlocProvider.of<TodoBloc>(context).add(LoadTodos());
+    BlocProvider.of<JournalBloc>(context).add(LoadJournals());
   }
 
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<TodoBloc>(context).add(LoadTodos());
+    BlocProvider.of<JournalBloc>(context).add(LoadJournals());
   }
 
   @override
@@ -30,24 +30,24 @@ class _TodoPlannerPageState extends State<TodoPlannerPage> {
       child: Stack(
         children: [
           Positioned.fill(
-            child: BlocBuilder<TodoBloc, TodoState>(
+            child: BlocBuilder<JournalBloc, JournalState>(
               builder: (context, state) {
-                if (state is TodoLoading) {
+                if (state is JournalLoading) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is TodosLoaded) {
-                  if (state.todos.isEmpty) {
+                } else if (state is JournalsLoaded) {
+                  if (state.journals.isEmpty) {
                     return const Center(child: Text('No todos found.'));
                   } else {
                     return ListView.builder(
-                      itemCount: state.todos.length,
+                      itemCount: state.journals.length,
                       itemBuilder: (context, index) {
-                        return TodoCard(
-                          todo: state.todos[index],
+                        return JournalCard(
+                          journal: state.journals[index],
                         );
                       },
                     );
                   }
-                } else if (state is TodosError) {
+                } else if (state is JournalsError) {
                   return Center(child: Text(state.message));
                 } else {
                   return const Center(child: Text('Something went wrong.'));

@@ -1,14 +1,9 @@
-import 'dart:ui';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.dart';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_event.dart';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
-import 'package:alenlachu_app/presentation/admin/screens/pages/landing/landing_page.dart';
-import 'package:alenlachu_app/presentation/common/screens/authentication/signup.dart';
 import 'package:alenlachu_app/presentation/common/widgets/form_container.dart';
 import 'package:alenlachu_app/presentation/common/widgets/main_button.dart';
-import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:alenlachu_app/presentation/common/widgets/styled_text.dart';
-import 'package:alenlachu_app/presentation/user/screens/pages/landing/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

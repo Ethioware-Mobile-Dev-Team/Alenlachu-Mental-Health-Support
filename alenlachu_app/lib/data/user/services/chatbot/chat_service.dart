@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:alenlachu_app/data/user/models/chat_message.dart';
 
 class ChatService {
-  late final String? _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
+  late final String _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
 
   Future<List<ChatMessage>> getChatHistory() async {
     final userId = FirebaseAuth.instance.currentUser?.uid;

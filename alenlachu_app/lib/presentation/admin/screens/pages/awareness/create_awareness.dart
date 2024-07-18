@@ -2,7 +2,6 @@ import 'package:alenlachu_app/blocs/common/awareness/awareness_bloc.dart';
 import 'package:alenlachu_app/blocs/common/awareness/awareness_event.dart';
 import 'package:alenlachu_app/blocs/common/awareness/awareness_state.dart';
 import 'package:alenlachu_app/data/common/models/awareness/awareness_model.dart';
-import 'package:alenlachu_app/data/common/services/helper/unique_id.dart';
 import 'package:alenlachu_app/presentation/admin/widgets/admin_app_bar.dart';
 import 'package:alenlachu_app/presentation/common/widgets/main_button.dart';
 import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';

@@ -4,7 +4,7 @@ import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/chat.
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/discover.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/home.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/profile.dart';
-import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/todo.dart';
+import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/journal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

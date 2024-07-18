@@ -1,8 +1,6 @@
-import 'dart:async';
 
 import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.dart';
 import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
-import 'package:alenlachu_app/presentation/common/screens/authentication/login.dart';
 import 'package:alenlachu_app/presentation/common/widgets/main_button.dart';
 import 'package:alenlachu_app/presentation/common/widgets/styled_text.dart';
 import 'package:flutter/material.dart';

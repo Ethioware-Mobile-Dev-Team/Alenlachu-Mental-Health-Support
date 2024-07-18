@@ -1,6 +1,4 @@
 import 'package:alenlachu_app/presentation/admin/screens/pages/awareness/awareness_page.dart';
-import 'package:alenlachu_app/presentation/admin/screens/pages/awareness/create_awareness.dart';
-import 'package:alenlachu_app/presentation/admin/screens/pages/event/create_event.dart';
 import 'package:alenlachu_app/presentation/admin/screens/pages/event/event_page.dart';
 import 'package:flutter/material.dart';
 

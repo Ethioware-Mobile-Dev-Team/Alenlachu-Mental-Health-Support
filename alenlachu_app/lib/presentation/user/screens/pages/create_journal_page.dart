@@ -1,5 +1,5 @@
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_bloc.dart';
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_event.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_bloc.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_event.dart';
 import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,7 +91,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      context.read<TodoBloc>().add(AddTodo(
+                      context.read<JournalBloc>().add(AddJournal(
                           title: _titleController.text.trim(),
                           description: _descriptionController.text.trim(),
                           deadline: _selectedDeadline!));

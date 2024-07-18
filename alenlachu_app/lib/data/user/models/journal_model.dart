@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
-class TodoModel extends Equatable {
+class JournalModel extends Equatable {
   String id;
   String title;
   String description;
@@ -9,7 +9,7 @@ class TodoModel extends Equatable {
   String createdDate;
   bool isCompleted;
 
-  TodoModel({
+  JournalModel({
     required this.id,
     required this.title,
     required this.description,
@@ -29,8 +29,8 @@ class TodoModel extends Equatable {
     };
   }
 
-  factory TodoModel.fromJson(Map<String, dynamic> json) {
-    return TodoModel(
+  factory JournalModel.fromJson(Map<String, dynamic> json) {
+    return JournalModel(
       id: json['id'],
       title: json['title'],
       description: json['description'],

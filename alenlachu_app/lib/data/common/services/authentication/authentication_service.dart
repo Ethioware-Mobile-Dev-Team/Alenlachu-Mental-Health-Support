@@ -1,13 +1,10 @@
 import 'dart:developer';
 
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_bloc.dart';
-import 'package:alenlachu_app/blocs/user/todo_bloc/todo_event.dart';
 import 'package:alenlachu_app/core/common/login_manager.dart';
 import 'package:alenlachu_app/data/common/models/user_model.dart';
 import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthServices {
   final _auth = auth.FirebaseAuth.instance;

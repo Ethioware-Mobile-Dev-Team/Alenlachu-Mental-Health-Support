@@ -3,7 +3,7 @@ import 'package:alenlachu_app/data/common/models/awareness/awareness_model.dart'
 import 'package:http/http.dart' as http;
 
 class AwarenessService {
-  late final String? _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
+  late final String _baseUrl = 'https://alenlachuapp-server.onrender.com/api';
 
   // Create an Awareness Entry
   Future<AwarenessModel> createAwareness(AwarenessModel awareness) async {
