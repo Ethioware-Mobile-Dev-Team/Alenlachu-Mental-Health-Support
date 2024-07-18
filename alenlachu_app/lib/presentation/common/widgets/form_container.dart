@@ -8,16 +8,20 @@ class FormContainer extends StatefulWidget {
   final bool? isPasswordField;
   final bool? isReadOnly;
   final Icon? prefixIcon;
+  final Icon? sufixIcon;
   final double? width;
+  final String? Function(String?)? validator;
   const FormContainer(
       {super.key,
       required this.controller,
+      required this.validator,
       this.hintText,
       this.labelText,
       this.inputType,
       this.isPasswordField,
       this.isReadOnly,
       this.prefixIcon,
+      this.sufixIcon,
       this.width});
 
   @override
@@ -37,8 +41,9 @@ class _FormContainerState extends State<FormContainer> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.09,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: TextFormField(
+        validator: widget.validator,
         controller: widget.controller,
         keyboardType: widget.inputType,
         obscureText: widget.isPasswordField == true ? _obscureText : false,
@@ -54,9 +59,7 @@ class _FormContainerState extends State<FormContainer> {
                     : GestureDetector(
                         onTap: _updateObscureText,
                         child: const Icon(Icons.visibility)))
-                : null,
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(25))),
+                : widget.sufixIcon),
       ),
     );
   }

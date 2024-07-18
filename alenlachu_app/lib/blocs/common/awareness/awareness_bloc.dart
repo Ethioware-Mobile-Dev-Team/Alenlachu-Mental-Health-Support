@@ -37,7 +37,7 @@ class AwarenessBloc extends Bloc<AwarenessEvent, AwarenessState> {
       await uploadTask.whenComplete(() => null);
 
       String imageUrl = await ref.getDownloadURL();
-      showToast('ImageUrl: $imageUrl');
+      // showToast('ImageUrl: $imageUrl');
       event.awareness.image = imageUrl;
       add(UpdateAwareness(event.awareness));
       add(LoadAwareness());

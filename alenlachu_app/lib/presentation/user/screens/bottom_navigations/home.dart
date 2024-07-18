@@ -5,6 +5,7 @@ import 'package:alenlachu_app/blocs/common/events/events_bloc.dart';
 import 'package:alenlachu_app/blocs/common/events/events_event.dart';
 import 'package:alenlachu_app/blocs/common/events/events_state.dart';
 import 'package:alenlachu_app/presentation/common/widgets/quote_carousel.dart';
+import 'package:alenlachu_app/presentation/common/widgets/styled_text.dart';
 import 'package:alenlachu_app/presentation/user/widgets/home/awareness_card.dart';
 import 'package:alenlachu_app/presentation/user/widgets/home/event_card.dart';
 import 'package:flutter/material.dart';
@@ -55,19 +56,20 @@ class _UserHomePageState extends State<UserHomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 10,
-                ),
                 const ImageCarousel(),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 10),
+                    horizontal: 10.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Explore Events"),
+                      const StyledText(
+                        lable: "Explore Events",
+                        color: Colors.black,
+                      ),
                       SizedBox(
-                        height: 250,
+                        height: 260,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: BlocBuilder<EventBloc, EventState>(
@@ -79,7 +81,11 @@ class _UserHomePageState extends State<UserHomePage> {
                               } else if (state is EventLoaded) {
                                 if (state.events.isEmpty) {
                                   return const Center(
-                                      child: Text('Events will apear here.'));
+                                      child: StyledText(
+                                    lable: 'Events will apear here.',
+                                    color: Colors.grey,
+                                    size: 14,
+                                  ));
                                 } else {
                                   return ListView.builder(
                                     scrollDirection: Axis.horizontal,

@@ -2,9 +2,13 @@ import 'package:alenlachu_app/blocs/common/events/events_bloc.dart';
 import 'package:alenlachu_app/blocs/common/events/events_event.dart';
 import 'package:alenlachu_app/data/common/models/event/event_model.dart';
 import 'package:alenlachu_app/data/common/services/authentication/authentication_service.dart';
+import 'package:alenlachu_app/presentation/common/screens/pages/event_detail_page.dart';
+import 'package:alenlachu_app/presentation/common/widgets/main_button.dart';
 import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
+import 'package:alenlachu_app/presentation/common/widgets/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class EventCard extends StatefulWidget {
   final EventModel event;
@@ -54,64 +58,115 @@ class _EventCardState extends State<EventCard> {
     });
   }
 
+  String _formatDate(DateTime date) {
+    return DateFormat('MMMM d, yyyy').format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          height: 240,
-          width: 200,
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(255, 200, 200, 200),
-                  spreadRadius: 1,
-                  blurRadius: 6,
-                  offset: Offset(0, 4),
-                )
-              ]),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 120,
-                width: 200,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        image: widget.event.image == null
-                            ? const AssetImage(
-                                'assets/images/event_default.png')
-                            : NetworkImage(widget.event.image!),
-                        fit: BoxFit.fill)),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.event.title,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      widget.event.date,
-                      style: const TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                    Text(widget.event.organizer.location),
-                    TextButton(
-                        onPressed: _toggleRSVP,
-                        child: Text(
-                          _isRSVP ? 'Un-RSVP' : 'RSVP',
-                          style: const TextStyle(color: Colors.blue),
-                        ))
-                  ],
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => EventDetailPage(event: widget.event)));
+          },
+          child: Container(
+            height: 210,
+            width: 200,
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromARGB(255, 200, 200, 200),
+                    spreadRadius: 1,
+                    blurRadius: 6,
+                    offset: Offset(0, 4),
+                  )
+                ]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 100,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          image: widget.event.image == null
+                              ? const AssetImage(
+                                  'assets/images/event_default.png')
+                              : NetworkImage(widget.event.image!),
+                          fit: BoxFit.fill)),
                 ),
-              )
-            ],
+                Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        StyledText(
+                          lable: widget.event.title,
+                          color: Colors.black,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.timelapse,
+                              color: Colors.grey,
+                              size: 15,
+                            ),
+                            const SizedBox(
+                              width: 2,
+                            ),
+                            StyledText(
+                              lable: _formatDate(
+                                  DateTime.parse(widget.event.date)),
+                              size: 16,
+                              color: Colors.grey,
+                              isBold: false,
+                              // style: const TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                            onTap: () async {
+                              try {
+                                await widget.event.organizer.openMaps();
+                              } catch (e) {
+                                showToast(e.toString());
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  size: 15,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                StyledText(
+                                  lable: widget.event.organizer.location,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 16,
+                                ),
+                              ],
+                            )),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        MainButton(
+                          onPressed: _toggleRSVP,
+                          height: 30,
+                          width: 80,
+                          child: StyledText(
+                            lable: _isRSVP ? 'UnRSVP' : 'RSVP',
+                            size: 14,
+                          ),
+                        )
+                      ],
+                    ))
+              ],
+            ),
           ),
         ),
         const SizedBox(

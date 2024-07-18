@@ -40,7 +40,7 @@ class EventService {
 
     if (response.statusCode == 201) {
       showToast("Event Created successfully");
-      showToast(response.body);
+      // showToast(response.body);
       return EventModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to create event ${response.request}');
@@ -48,7 +48,7 @@ class EventService {
   }
 
   Future<EventModel> updateEvent(EventModel event) async {
-    showToast(event.id!);
+    // showToast(event.id!);
     final response = await http.put(
       Uri.parse('$baseUrl/api/events/${event.id!}'),
       headers: <String, String>{
@@ -73,7 +73,7 @@ class EventService {
   }
 
   Future<EventModel> rsvpEvent(String eventId, String userId) async {
-    showToast(eventId);
+    // showToast(eventId);
     final response = await http.post(
       Uri.parse('$baseUrl/api/events/$eventId/rsvp'),
       headers: <String, String>{

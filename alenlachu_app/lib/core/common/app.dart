@@ -19,7 +19,10 @@ import 'package:alenlachu_app/presentation/admin/screens/pages/event/create_even
 import 'package:alenlachu_app/presentation/admin/screens/pages/landing/landing_page.dart';
 import 'package:alenlachu_app/presentation/common/screens/authentication/login.dart';
 import 'package:alenlachu_app/presentation/common/screens/authentication/phone_auth.dart';
+import 'package:alenlachu_app/presentation/common/screens/authentication/signup.dart';
+import 'package:alenlachu_app/presentation/common/screens/pages/event_detail_page.dart';
 import 'package:alenlachu_app/presentation/common/screens/pages/profile_setting.dart';
+import 'package:alenlachu_app/presentation/common/screens/splash_screens/splash_screen.dart';
 import 'package:alenlachu_app/presentation/common/widgets/custome_theme.dart';
 import 'package:alenlachu_app/presentation/user/screens/pages/create_todo-page.dart';
 import 'package:alenlachu_app/presentation/user/screens/pages/landing/landing_page.dart';
@@ -73,6 +76,11 @@ class _MainAppState extends State<MainApp> {
             '/createTodoPage': (context) => const CreateTodoPage(),
             '/createAwarenessPage': (context) => const AwarenessCreatePage(),
             '/createEventPage': (context) => const CreateEventPage(),
+            '/onboardingScreenScreeun': (context) => const OnboardingScreen(),
+            '/login': (context) => const LoginPage(),
+            '/signup': (context) => const SignUpPage(),
+            '/adminLanding': (context) => const AdminLandingPage(),
+            '/userLanding': (context) => const UserLandingPage(),
           },
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
               builder: (context, state) {
@@ -83,7 +91,7 @@ class _MainAppState extends State<MainApp> {
                 return const UserLandingPage();
               }
             } else {
-              return const LoginPage();
+              return const OnboardingScreen();
             }
           }),
         ));

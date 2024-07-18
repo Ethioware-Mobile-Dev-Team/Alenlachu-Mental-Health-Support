@@ -25,7 +25,7 @@ class EventBloc extends Bloc<EventEvent, EventState> {
 
     try {
       String imageName = event.event.id!;
-      showToast(imageName);
+      // showToast(imageName);
       if (event.event.image != null) {
         showToast('Deleting old file...');
         final storageRef = _storage.ref().child('event_images/$imageName.jpg');
@@ -39,7 +39,7 @@ class EventBloc extends Bloc<EventEvent, EventState> {
       await uploadTask.whenComplete(() => null);
 
       String imageUrl = await ref.getDownloadURL();
-      showToast('ImageUrl: $imageUrl');
+      // showToast('ImageUrl: $imageUrl');
       event.event.image = imageUrl;
       add(UpdateEvent(event.event));
       add(LoadEvents());

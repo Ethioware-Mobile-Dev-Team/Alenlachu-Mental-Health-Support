@@ -99,6 +99,12 @@ class _ProfileSettingState extends State<ProfileSetting> {
                   labelText: 'name',
                   inputType: TextInputType.text,
                   isPasswordField: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the Name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 10,

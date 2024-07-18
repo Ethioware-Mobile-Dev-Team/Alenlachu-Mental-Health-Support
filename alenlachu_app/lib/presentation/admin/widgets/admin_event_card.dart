@@ -3,11 +3,12 @@ import 'dart:typed_data';
 import 'package:alenlachu_app/blocs/common/events/events_bloc.dart';
 import 'package:alenlachu_app/blocs/common/events/events_event.dart';
 import 'package:alenlachu_app/data/common/models/event/event_model.dart';
-import 'package:alenlachu_app/data/common/services/authentication/authentication_service.dart';
 import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
+import 'package:alenlachu_app/presentation/common/widgets/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class AdminEventCard extends StatefulWidget {
   final EventModel event;
@@ -20,6 +21,10 @@ class AdminEventCard extends StatefulWidget {
 
 class _AdminEventCardState extends State<AdminEventCard> {
   final ImagePicker _picker = ImagePicker();
+
+  String _formatDate(DateTime date) {
+    return DateFormat('MMMM d, yyyy').format(date);
+  }
 
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -54,7 +59,7 @@ class _AdminEventCardState extends State<AdminEventCard> {
               GestureDetector(
                 onTap: _pickImage,
                 child: Container(
-                  height: 70,
+                  height: 90,
                   width: MediaQuery.of(context).size.width * 0.35,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -66,19 +71,57 @@ class _AdminEventCardState extends State<AdminEventCard> {
                           fit: BoxFit.fill)),
                 ),
               ),
+              const SizedBox(
+                width: 10,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.event.title,
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                  StyledText(
+                    lable: widget.event.title,
+                    color: Colors.black,
                   ),
-                  Text(
-                    widget.event.date,
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.timelapse,
+                        color: Colors.grey,
+                        size: 15,
+                      ),
+                      const SizedBox(
+                        width: 2,
+                      ),
+                      StyledText(
+                        lable: _formatDate(DateTime.parse(widget.event.date)),
+                        size: 16,
+                        color: Colors.grey,
+                        isBold: false,
+                        // style: const TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                    ],
                   ),
-                  Text(widget.event.organizer.location),
+                  GestureDetector(
+                      onTap: () async {
+                        try {
+                          await widget.event.organizer.openMaps();
+                        } catch (e) {
+                          showToast(e.toString());
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.location_on,
+                            size: 15,
+                            color: Colors.blue,
+                          ),
+                          StyledText(
+                            lable: widget.event.organizer.location,
+                            color: Colors.blue,
+                            size: 16,
+                          ),
+                        ],
+                      )),
                   Text('RSVPS: ${widget.event.rsvps.length}'),
                 ],
               )
