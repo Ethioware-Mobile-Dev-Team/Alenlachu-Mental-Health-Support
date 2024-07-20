@@ -29,7 +29,7 @@ class Organizer extends Equatable {
   Future<void> openMaps() async {
     final url = Uri.parse(mapsUrl);
     if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.inAppWebView);
+      await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not launch $url';
     }

@@ -38,100 +38,104 @@ class _LoginPageState extends State<LoginPage> {
             }
           }
         },
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: CustomPaint(
-                painter: WavePainter(),
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: WavePainter(),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Welcome Back!",
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      // color: Colors.blueAccent,
-                    ),
-                  ),
-                  const SizedBox(height: 50),
-                  FormContainer(
-                    controller: _emailController,
-                    labelText: 'Email',
-                    isPasswordField: false,
-                    inputType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter the Email';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  FormContainer(
-                    controller: _passwordController,
-                    labelText: 'Password',
-                    isPasswordField: true,
-                    inputType: TextInputType.text,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Password';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 100,
-                  ),
-                  BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                    builder: (context, state) {
-                      return MainButton(
-                        onPressed: () {
-                          context.read<AuthenticationBloc>().add(LoginRequested(
-                              email: _emailController.text.trim(),
-                              password: _passwordController.text.trim()));
-                        },
-                        child: state is Authenticating
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : const StyledText(
-                                lable: "Log in",
-                              ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Don't have an account?",
-                        // style: TextStyle(color: Colors.blueAccent),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20, top: 150),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Welcome Back!",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        // color: Colors.blueAccent,
                       ),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushReplacementNamed('/signup');
-                        },
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            color: Colors.blueAccent,
-                            fontWeight: FontWeight.bold,
+                    ),
+                    const SizedBox(height: 50),
+                    FormContainer(
+                      controller: _emailController,
+                      labelText: 'Email',
+                      isPasswordField: false,
+                      inputType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the Email';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    FormContainer(
+                      controller: _passwordController,
+                      labelText: 'Password',
+                      isPasswordField: true,
+                      inputType: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Password';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                      builder: (context, state) {
+                        return MainButton(
+                          onPressed: () {
+                            context.read<AuthenticationBloc>().add(
+                                LoginRequested(
+                                    email: _emailController.text.trim(),
+                                    password: _passwordController.text.trim()));
+                          },
+                          child: state is Authenticating
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const StyledText(
+                                  lable: "Log in",
+                                ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Don't have an account?",
+                          // style: TextStyle(color: Colors.blueAccent),
+                        ),
+                        const SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed('/signup');
+                          },
+                          child: const Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

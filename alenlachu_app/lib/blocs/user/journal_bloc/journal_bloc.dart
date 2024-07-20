@@ -1,9 +1,10 @@
-import 'package:alenlachu_app/blocs/user/Journal_bloc/Journal_event.dart';
-import 'package:alenlachu_app/blocs/user/Journal_bloc/Journal_state.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_event.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_state.dart';
 
-import 'package:alenlachu_app/data/user/models/Journal_model.dart';
+import 'package:alenlachu_app/data/user/models/journal_model.dart';
 
-import 'package:alenlachu_app/data/user/services/Journal_services.dart';
+import 'package:alenlachu_app/data/user/services/journal_services.dart';
+import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,8 +39,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
           id: journalId,
           title: event.title,
           description: event.description,
-          deadline: event.deadline.toString(),
-          createdDate: DateTime.now().toString());
+          createdDate: DateTime.now());
       await _service.addJournal(journal);
       emit(JournalsLoaded(await _service.fetchJournals()));
     } catch (e) {
@@ -48,7 +48,6 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
   }
 
   void _onRemoveJournal(RemoveJournal event, Emitter<JournalState> emit) async {
-    //emit(JournalLoading());
     if (state is JournalsLoaded) {
       final List<JournalModel> updatedJournals = (state as JournalsLoaded)
           .journals
@@ -56,6 +55,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
           .toList();
 
       try {
+        emit(JournalLoading());
         await _service.updateJournals(updatedJournals);
         emit(JournalsLoaded(await _service.fetchJournals()));
       } catch (e) {

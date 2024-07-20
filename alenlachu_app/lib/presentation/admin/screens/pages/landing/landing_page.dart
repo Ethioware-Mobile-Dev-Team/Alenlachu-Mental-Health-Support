@@ -1,4 +1,6 @@
 import 'package:alenlachu_app/blocs/admin/bottom_navigation_cubit/admin_bottom_navigation_cubit.dart';
+import 'package:alenlachu_app/blocs/common/events/events_bloc.dart';
+import 'package:alenlachu_app/blocs/common/events/events_event.dart';
 import 'package:alenlachu_app/presentation/admin/screens/bottom_navigations/home.dart';
 import 'package:alenlachu_app/presentation/admin/screens/bottom_navigations/post.dart';
 import 'package:alenlachu_app/presentation/admin/screens/bottom_navigations/profile.dart';
@@ -14,6 +16,12 @@ class AdminLandingPage extends StatefulWidget {
 }
 
 class _AdminLandingPageState extends State<AdminLandingPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<EventBloc>().add(LoadEvents());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,18 +1,19 @@
 import 'package:alenlachu_app/blocs/user/journal_bloc/journal_bloc.dart';
 import 'package:alenlachu_app/blocs/user/journal_bloc/journal_event.dart';
 import 'package:alenlachu_app/blocs/user/journal_bloc/journal_state.dart';
+import 'package:alenlachu_app/presentation/common/widgets/styled_text.dart';
 import 'package:alenlachu_app/presentation/user/widgets/journal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TodoPlannerPage extends StatefulWidget {
-  const TodoPlannerPage({super.key});
+class JournalPage extends StatefulWidget {
+  const JournalPage({super.key});
 
   @override
-  State<TodoPlannerPage> createState() => _TodoPlannerPageState();
+  State<JournalPage> createState() => _JournalPageState();
 }
 
-class _TodoPlannerPageState extends State<TodoPlannerPage> {
+class _JournalPageState extends State<JournalPage> {
   Future<void> _onRefresh() async {
     BlocProvider.of<JournalBloc>(context).add(LoadJournals());
   }
@@ -36,7 +37,12 @@ class _TodoPlannerPageState extends State<TodoPlannerPage> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is JournalsLoaded) {
                   if (state.journals.isEmpty) {
-                    return const Center(child: Text('No todos found.'));
+                    return const Center(
+                        child: StyledText(
+                      lable: 'Add Journals',
+                      color: Colors.grey,
+                      size: 14,
+                    ));
                   } else {
                     return ListView.builder(
                       itemCount: state.journals.length,
@@ -60,7 +66,7 @@ class _TodoPlannerPageState extends State<TodoPlannerPage> {
             right: 16.0,
             child: FloatingActionButton(
               onPressed: () {
-                Navigator.of(context).pushNamed('/createTodoPage');
+                Navigator.of(context).pushNamed('/createJournalPage');
               },
               tooltip: 'Create Todo',
               backgroundColor: Theme.of(context).primaryColor,

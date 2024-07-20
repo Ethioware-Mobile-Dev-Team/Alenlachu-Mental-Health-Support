@@ -1,22 +1,24 @@
 import 'package:alenlachu_app/blocs/user/journal_bloc/journal_bloc.dart';
 import 'package:alenlachu_app/blocs/user/journal_bloc/journal_event.dart';
+import 'package:alenlachu_app/blocs/user/journal_bloc/journal_state.dart';
 import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
+import 'package:alenlachu_app/presentation/common/widgets/main_button.dart';
+import 'package:alenlachu_app/presentation/common/widgets/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class CreateTodoPage extends StatefulWidget {
-  const CreateTodoPage({super.key});
+class CreateJournalPage extends StatefulWidget {
+  const CreateJournalPage({super.key});
 
   @override
-  _CreateTodoPageState createState() => _CreateTodoPageState();
+  _CreateJournalPageState createState() => _CreateJournalPageState();
 }
 
-class _CreateTodoPageState extends State<CreateTodoPage> {
+class _CreateJournalPageState extends State<CreateJournalPage> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  DateTime? _selectedDeadline;
 
   @override
   Widget build(BuildContext context) {
@@ -57,52 +59,28 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                 },
               ),
               const SizedBox(height: 16.0),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Deadline',
-                        border: OutlineInputBorder(),
-                      ),
-                      readOnly: true,
-                      controller: TextEditingController(
-                        text: _selectedDeadline == null
-                            ? ''
-                            : DateFormat.yMd().format(_selectedDeadline!),
-                      ),
-                      onTap: _pickDeadline,
-                      validator: (value) {
-                        if (_selectedDeadline == null) {
-                          return 'Please select a deadline';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.calendar_today),
-                    onPressed: _pickDeadline,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16.0),
               Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      context.read<JournalBloc>().add(AddJournal(
-                          title: _titleController.text.trim(),
-                          description: _descriptionController.text.trim(),
-                          deadline: _selectedDeadline!));
-                      // Add your todo creation logic here
-                      print('Title: ${_titleController.text}');
-                      print('Description: ${_descriptionController.text}');
-                      print('Deadline: ${_selectedDeadline.toString()}');
-                      Navigator.of(context).pop();
-                    }
+                child: BlocBuilder<JournalBloc, JournalState>(
+                  builder: (context, state) {
+                    return MainButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<JournalBloc>().add(AddJournal(
+                                title: _titleController.text.trim(),
+                                description: _descriptionController.text.trim(),
+                              ));
+                        }
+                      },
+                      child: state is JournalLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : const StyledText(
+                              lable: 'Create Journal',
+                              size: 16,
+                            ),
+                    );
                   },
-                  child: const Text('Create Todo'),
                 ),
               ),
             ],
@@ -110,20 +88,6 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
         ),
       ),
     );
-  }
-
-  Future<void> _pickDeadline() async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDeadline ?? DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null && picked != _selectedDeadline) {
-      setState(() {
-        _selectedDeadline = picked;
-      });
-    }
   }
 
   @override

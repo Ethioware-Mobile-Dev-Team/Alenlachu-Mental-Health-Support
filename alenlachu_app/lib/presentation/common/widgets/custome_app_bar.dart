@@ -19,11 +19,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           case UserBottomNavigationState.home:
             title = 'Home';
             break;
-          case UserBottomNavigationState.todo:
-            title = 'Todo';
+          case UserBottomNavigationState.journal:
+            title = 'journal';
             break;
-          case UserBottomNavigationState.discover:
-            title = 'Discover';
+          case UserBottomNavigationState.venting:
+            title = 'Venting Space';
             break;
           case UserBottomNavigationState.chat:
             title = 'Chat';

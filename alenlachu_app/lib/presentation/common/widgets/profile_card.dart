@@ -12,7 +12,6 @@ class ProfileCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return SizedBox(
       width: size.width,
-      height: size.height * 0.5,
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is Authenticated) {

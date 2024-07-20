@@ -56,6 +56,9 @@ class _UserHomePageState extends State<UserHomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(
+                  height: 15,
+                ),
                 const ImageCarousel(),
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -127,8 +130,11 @@ class _UserHomePageState extends State<UserHomePage> {
                               } else if (state is AwarenessLoaded) {
                                 if (state.awarenesss.isEmpty) {
                                   return const Center(
-                                      child: Text(
-                                          'Awarenesses will appear here.'));
+                                      child: StyledText(
+                                    lable: 'Topics will apear here.',
+                                    color: Colors.grey,
+                                    size: 14,
+                                  ));
                                 } else {
                                   return ListView.builder(
                                     scrollDirection: Axis.horizontal,

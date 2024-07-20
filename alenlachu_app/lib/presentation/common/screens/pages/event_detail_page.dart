@@ -1,6 +1,11 @@
+import 'dart:async';
+
+import 'package:alenlachu_app/blocs/common/authentication/authentication_bloc.dart';
+import 'package:alenlachu_app/blocs/common/authentication/authentication_state.dart';
 import 'package:alenlachu_app/blocs/common/events/events_bloc.dart';
 import 'package:alenlachu_app/blocs/common/events/events_event.dart';
 import 'package:alenlachu_app/blocs/common/events/events_state.dart';
+import 'package:alenlachu_app/data/common/models/user_model.dart';
 import 'package:alenlachu_app/data/common/services/authentication/authentication_service.dart';
 import 'package:alenlachu_app/presentation/common/widgets/main_button.dart';
 import 'package:alenlachu_app/presentation/common/widgets/show_toast.dart';
@@ -56,6 +61,32 @@ class _EventDetailPageState extends State<EventDetailPage> {
     setState(() {
       _isRSVP = !_isRSVP;
     });
+  }
+
+  Future<Widget> _getRSVPButton() async {
+    UserModel? user = await _authServices.getUserModel();
+
+    if (user != null) {
+      if (user.role == 'user') {
+        return Center(
+          child: BlocBuilder<EventBloc, EventState>(
+            builder: (context, state) {
+              return MainButton(
+                onPressed: _toggleRSVP,
+                child: state is EventRSVPing || state is EventUnRSVPing
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : StyledText(
+                        lable: _isRSVP ? 'UnRSVP' : 'RSVP',
+                      ),
+              );
+            },
+          ),
+        );
+      }
+    }
+    return const SizedBox();
   }
 
   String formatDate(DateTime date) {
@@ -314,22 +345,15 @@ class _EventDetailPageState extends State<EventDetailPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Center(
-                    child: BlocBuilder<EventBloc, EventState>(
-                      builder: (context, state) {
-                        return MainButton(
-                          onPressed: _toggleRSVP,
-                          child:
-                              state is EventRSVPing || state is EventUnRSVPing
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                  : StyledText(
-                                      lable: _isRSVP ? 'UnRSVP' : 'RSVP',
-                                    ),
-                        );
-                      },
-                    ),
+                  FutureBuilder<Widget>(
+                    future: _getRSVPButton(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Text('Error loading RSVP button');
+                      } else {
+                        return snapshot.data ?? const SizedBox();
+                      }
+                    },
                   )
                 ],
               ),

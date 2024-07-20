@@ -1,4 +1,4 @@
-import 'package:alenlachu_app/data/user/models/Journal_model.dart';
+import 'package:alenlachu_app/data/user/models/journal_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class JournalState extends Equatable {

@@ -40,113 +40,116 @@ class _SignUpPageState extends State<SignUpPage> {
             }
           }
         },
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: CustomPaint(
-                painter: SignUpWavePainter(),
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: SignUpWavePainter(),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Create Account",
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent,
-                    ),
-                  ),
-                  const SizedBox(height: 50),
-                  FormContainer(
-                    controller: _nameController,
-                    labelText: 'Full Name',
-                    isPasswordField: false,
-                    inputType: TextInputType.text,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter the Full Name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  FormContainer(
-                    controller: _emailController,
-                    labelText: 'Email',
-                    isPasswordField: false,
-                    inputType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter email';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  FormContainer(
-                    controller: _passwordController,
-                    labelText: 'Password',
-                    isPasswordField: true,
-                    inputType: TextInputType.text,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter the Password';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 100),
-                  BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                    builder: (context, state) {
-                      return MainButton(
-                        onPressed: () {
-                          context.read<AuthenticationBloc>().add(
-                              SignUpRequested(
-                                  name: _nameController.text.trim(),
-                                  email: _emailController.text.trim(),
-                                  password: _passwordController.text.trim()));
-                        },
-                        child: state is Authenticating
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : const StyledText(
-                                lable: "Sign Up",
-                              ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Already have an account?",
-                        // style: TextStyle(color: Colors.blueAccent),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20, top: 150),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Create Account",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushReplacementNamed('/login');
-                        },
-                        child: const Text(
-                          "Log in",
-                          style: TextStyle(
-                            color: Colors.blueAccent,
-                            fontWeight: FontWeight.bold,
+                    ),
+                    const SizedBox(height: 50),
+                    FormContainer(
+                      controller: _nameController,
+                      labelText: 'Full Name',
+                      isPasswordField: false,
+                      inputType: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the Full Name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    FormContainer(
+                      controller: _emailController,
+                      labelText: 'Email',
+                      isPasswordField: false,
+                      inputType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter email';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    FormContainer(
+                      controller: _passwordController,
+                      labelText: 'Password',
+                      isPasswordField: true,
+                      inputType: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the Password';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 100),
+                    BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                      builder: (context, state) {
+                        return MainButton(
+                          onPressed: () {
+                            context.read<AuthenticationBloc>().add(
+                                SignUpRequested(
+                                    name: _nameController.text.trim(),
+                                    email: _emailController.text.trim(),
+                                    password: _passwordController.text.trim()));
+                          },
+                          child: state is Authenticating
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const StyledText(
+                                  lable: "Sign Up",
+                                ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Already have an account?",
+                          // style: TextStyle(color: Colors.blueAccent),
+                        ),
+                        const SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed('/login');
+                          },
+                          child: const Text(
+                            "Log in",
+                            style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

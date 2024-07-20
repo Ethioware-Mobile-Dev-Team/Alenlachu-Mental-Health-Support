@@ -1,4 +1,4 @@
-import 'package:alenlachu_app/data/user/models/Journal_model.dart';
+import 'package:alenlachu_app/data/user/models/journal_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class JournalEvent extends Equatable {
@@ -9,16 +9,14 @@ abstract class JournalEvent extends Equatable {
 class AddJournal extends JournalEvent {
   final String title;
   final String description;
-  final DateTime deadline;
 
   AddJournal({
     required this.title,
     required this.description,
-    required this.deadline,
   });
 
   @override
-  List<Object> get props => [title, description, deadline];
+  List<Object> get props => [title, description];
 }
 
 class RemoveJournal extends JournalEvent {

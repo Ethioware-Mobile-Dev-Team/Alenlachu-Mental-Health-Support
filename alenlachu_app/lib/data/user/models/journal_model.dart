@@ -1,21 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-// ignore: must_be_immutable
 class JournalModel extends Equatable {
-  String id;
-  String title;
-  String description;
-  String deadline;
-  String createdDate;
-  bool isCompleted;
+  final String id;
+  final String title;
+  final String description;
+  final DateTime createdDate;
 
-  JournalModel({
+  const JournalModel({
     required this.id,
     required this.title,
     required this.description,
-    required this.deadline,
     required this.createdDate,
-    this.isCompleted = false,
   });
 
   Map<String, dynamic> toJson() {
@@ -23,9 +18,7 @@ class JournalModel extends Equatable {
       'id': id,
       'title': title,
       'description': description,
-      'deadline': deadline,
-      'createdDate': createdDate,
-      'isCompleted': isCompleted,
+      'createdDate': createdDate.toIso8601String(),
     };
   }
 
@@ -34,13 +27,10 @@ class JournalModel extends Equatable {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      deadline: json['deadline'],
-      createdDate: json['createdDate'],
-      isCompleted: json['isCompleted'],
+      createdDate: DateTime.parse(json['createdDate']),
     );
   }
 
   @override
-  List<Object?> get props =>
-      [title, description, deadline, createdDate, isCompleted];
+  List<Object?> get props => [id, title, description, createdDate];
 }

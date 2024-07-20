@@ -68,7 +68,7 @@ class _AwarenessCardState extends State<AwarenessCard> {
                       StyledText(
                         lable: widget.awareness.description,
                         color: Colors.grey,
-                        maxLines: 3,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         size: 14,
                       ),

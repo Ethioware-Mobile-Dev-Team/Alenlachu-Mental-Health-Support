@@ -1,7 +1,11 @@
+import 'package:alenlachu_app/blocs/common/awareness/awareness_bloc.dart';
+import 'package:alenlachu_app/blocs/common/awareness/awareness_event.dart';
+import 'package:alenlachu_app/blocs/common/events/events_bloc.dart';
+import 'package:alenlachu_app/blocs/common/events/events_event.dart';
 import 'package:alenlachu_app/blocs/user/bottom_navigation_cubit/user_bottom_navigation_cubit.dart';
 import 'package:alenlachu_app/presentation/common/widgets/custome_app_bar.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/chat.dart';
-import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/discover.dart';
+import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/venting.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/home.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/profile.dart';
 import 'package:alenlachu_app/presentation/user/screens/bottom_navigations/journal.dart';
@@ -17,6 +21,12 @@ class UserLandingPage extends StatefulWidget {
 
 class _UserLandingPageState extends State<UserLandingPage> {
   @override
+  void initState() {
+    super.initState();
+    context.read<EventBloc>().add(LoadEvents());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
@@ -25,12 +35,12 @@ class _UserLandingPageState extends State<UserLandingPage> {
           switch (state) {
             case UserBottomNavigationState.home:
               return const UserHomePage();
-            case UserBottomNavigationState.todo:
-              return const TodoPlannerPage();
-            case UserBottomNavigationState.discover:
-              return const DiscoverPage();
+            case UserBottomNavigationState.journal:
+              return const JournalPage();
+            case UserBottomNavigationState.venting:
+              return const VentingPage();
             case UserBottomNavigationState.chat:
-              return const ChatPage();
+              return ChatPage();
             case UserBottomNavigationState.profile:
               return const UserProfilePage();
             default:
@@ -52,12 +62,12 @@ class _UserLandingPageState extends State<UserLandingPage> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.task_alt_rounded),
-                label: 'Todo',
+                icon: Icon(Icons.edit_note),
+                label: 'Journal',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Discover',
+                icon: Icon(Icons.spatial_audio_rounded),
+                label: 'Venting',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.chat),

@@ -1,8 +1,10 @@
 import 'package:alenlachu_app/blocs/user/journal_bloc/journal_bloc.dart';
 import 'package:alenlachu_app/blocs/user/journal_bloc/journal_event.dart';
 import 'package:alenlachu_app/data/user/models/journal_model.dart';
+import 'package:alenlachu_app/presentation/common/widgets/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class JournalCard extends StatelessWidget {
   final JournalModel journal;
@@ -65,18 +67,58 @@ class JournalCard extends StatelessWidget {
         elevation: 3,
         margin: const EdgeInsets.all(10),
         child: ListTile(
-          title: Text(journal.title),
+          title: Text(
+            journal.title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Deadline: ${journal.deadline}'),
-              Text('Created Date: ${journal.createdDate}'),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                journal.description,
+                maxLines: 4,
+                style: const TextStyle(overflow: TextOverflow.ellipsis),
+              ),
+              Text(
+                'Created Date: ${_formatDate(journal.createdDate)}',
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
             ],
           ),
           trailing: IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              _showEditDialog(context, journal);
+            icon: const Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
+            onPressed: () async {
+              return await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Confirm"),
+                    content: const Text(
+                        "Are you sure you want to delete this item?"),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: const Text("Cancel"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context
+                              .read<JournalBloc>()
+                              .add(RemoveJournal(journal: journal));
+                          Navigator.of(context).pop(true);
+                        },
+                        child: const Text("Delete"),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
           onTap: () {
@@ -85,6 +127,10 @@ class JournalCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _formatDate(DateTime date) {
+    return DateFormat('MMMM d, yyyy').format(date);
   }
 
   void _showEditDialog(BuildContext context, JournalModel journal) {
@@ -105,8 +151,7 @@ class JournalCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('Description: ${journal.description}'),
-              Text('Deadline: ${journal.deadline}'),
-              Text('Created Date: ${journal.createdDate}'),
+              Text('Created Date: ${_formatDate(journal.createdDate)}'),
             ],
           ),
           actions: [

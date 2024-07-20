@@ -13,7 +13,7 @@ class ChatService {
         await http.get(Uri.parse('$_baseUrl/chat-history?userId=$userId'));
     if (response.statusCode == 200) {
       final List<dynamic> chatHistoryJson = json.decode(response.body);
-      showToast("Feching data......${response.request}");
+      // showToast("Feching data......${response.request}");
       return chatHistoryJson.map((json) => ChatMessage.fromJson(json)).toList();
     } else {
       showToast("Erorrr");

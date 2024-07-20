@@ -8,11 +8,13 @@ import 'package:alenlachu_app/blocs/common/events/events_bloc.dart';
 import 'package:alenlachu_app/blocs/common/events/events_event.dart';
 import 'package:alenlachu_app/blocs/common/profile/profile_cubit.dart';
 import 'package:alenlachu_app/blocs/user/bottom_navigation_cubit/user_bottom_navigation_cubit.dart';
+import 'package:alenlachu_app/blocs/user/chat_bloc/chat_bloc.dart';
+import 'package:alenlachu_app/blocs/user/chat_bloc/chat_event.dart';
 import 'package:alenlachu_app/blocs/user/journal_bloc/journal_bloc.dart';
 import 'package:alenlachu_app/data/common/models/user_model.dart';
 import 'package:alenlachu_app/data/common/services/awareness_services.dart';
 import 'package:alenlachu_app/data/common/services/event_services.dart';
-import 'package:alenlachu_app/data/user/services/Journal_services.dart';
+import 'package:alenlachu_app/data/user/services/chatbot/chat_service.dart';
 import 'package:alenlachu_app/data/user/services/journal_services.dart';
 import 'package:alenlachu_app/presentation/admin/screens/pages/awareness/create_awareness.dart';
 import 'package:alenlachu_app/presentation/admin/screens/pages/event/create_event.dart';
@@ -58,12 +60,13 @@ class _MainAppState extends State<MainApp> {
                   context.read<AuthenticationBloc>())),
           BlocProvider(create: (context) => AdminBottomNavigationCubit()),
           BlocProvider(create: (context) => JournalBloc(JournalService())),
-          BlocProvider(
-              create: (context) =>
-                  EventBloc(EventService())..add(LoadEvents())),
+          BlocProvider(create: (context) => EventBloc(EventService())),
           BlocProvider(
               create: (context) =>
                   AwarenessBloc(AwarenessService())..add(LoadAwareness())),
+          BlocProvider(
+              create: (context) =>
+                  ChatBloc(ChatService())..add(LoadChatHistory())),
         ],
         // AwarenessBloc
         child: MaterialApp(
@@ -71,7 +74,7 @@ class _MainAppState extends State<MainApp> {
           theme: appTheme,
           routes: {
             '/profile': (context) => const ProfileSetting(),
-            '/createTodoPage': (context) => const CreateTodoPage(),
+            '/createJournalPage': (context) => const CreateJournalPage(),
             '/createAwarenessPage': (context) => const AwarenessCreatePage(),
             '/createEventPage': (context) => const CreateEventPage(),
             '/onboardingScreenScreeun': (context) => const OnboardingScreen(),

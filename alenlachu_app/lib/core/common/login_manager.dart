@@ -19,12 +19,12 @@ class LoginManager {
 
   static Future<UserModel?> getUser() async {
     try {
-      showToast("Getting User Data...");
+      // showToast("Getting User Data...");
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? userJson = prefs.getString(_userKey);
 
       if (userJson != null) {
-        showToast("User found");
+        // showToast("User found");
         UserModel user = UserModel.fromSnapshot(
             jsonDecode(userJson) as Map<String, dynamic>);
         return user;
@@ -33,7 +33,7 @@ class LoginManager {
       showToast(e.toString());
       return null;
     }
-    showToast("User not found");
+    // showToast("User not found");
     return null;
   }
 
